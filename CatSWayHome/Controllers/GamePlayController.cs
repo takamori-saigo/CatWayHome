@@ -1,4 +1,5 @@
 ﻿using CatSWayHome.Models;
+using CatSWayHome.View;
 using Microsoft.Xna.Framework.Input;
 
 namespace CatSWayHome.Controllers;
@@ -15,5 +16,6 @@ public class GamePlayController: IController
         var keyBoard = Keyboard.GetState();
         if (keyBoard.IsKeyDown(Keys.Escape))
             _game.State = GameState.Paused;
+        
     }
 }

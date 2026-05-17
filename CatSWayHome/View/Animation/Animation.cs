@@ -5,18 +5,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CatSWayHome.View.Animations;
 
-public class CoinAnimation
+public class Animation
 {
     public int _width  { get; private set; }
     public int _column  { get; private set; }
+    public int _row  { get; private set; }
     public int _height  { get; private set; }
     public Texture2D _texture  { get; private set; }
     public int _currentFrame  { get; private set; }
     public int _totalFrames;
     public DateTime _lastFrameTime { get; private set; }
+    private double _elips;
     
-    public CoinAnimation(int column, int width, int height, Texture2D texture)
+    public Animation(int row, int column, int width, int height, double elips , Texture2D texture)
     {
+        _elips = elips;
+        _row = row;
         _column = column;
         _totalFrames = column;
         _width = width;
@@ -31,7 +35,7 @@ public class CoinAnimation
         var currentTime = DateTime.Now;
         var elapsedTime = (currentTime - _lastFrameTime).TotalSeconds;
 
-        if (elapsedTime >= 0.14)
+        if (elapsedTime >= _elips)
         {
             _currentFrame = (_currentFrame + 1)%_totalFrames;
             _lastFrameTime = currentTime;

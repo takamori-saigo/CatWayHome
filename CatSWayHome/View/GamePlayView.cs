@@ -14,31 +14,88 @@
         private Texture2D _cointTexture;
         private Texture2D _heart;
         private Texture2D _emptyHeart;
+        private Texture2D _background;
+        
+        private Texture2D _catCalmTexture;
+        private Texture2D _catMovingTexture;
+        private Texture2D _catJumpingTexture;
+        
         private SpriteFont _font;
-        private Dictionary<Coin, CoinAnimation> _coinAnimations;
+        private Dictionary<Coin, Animation> _coinAnimations;
+        private Animation _calmCatAnimation;
+        private Animation _movingCatAnimation;
+        private Animation _jumpingCatAnimation;
         public GamePlayView(SpriteBatch spriteBatch, GameModel gameModel)
         {
             _spriteBatch = spriteBatch;
             _gameModel = gameModel;
-            _font  = _gameModel.CatGame.Content.Load<SpriteFont>("Font");
-            _cointTexture = gameModel.CatGame.Content.Load<Texture2D>("coin");
-            _heart =  gameModel.CatGame.Content.Load<Texture2D>("heart");
-            _emptyHeart =  gameModel.CatGame.Content.Load<Texture2D>("emptyHeart");
+            LoadTexture();
+            
+
+            
+            
+            _calmCatAnimation = new Animation(0, 4, _catCalmTexture.Width/4, _catCalmTexture.Height, 0.6, _catCalmTexture);
+            
+            
+            _movingCatAnimation = new Animation(0, 6, _catMovingTexture.Width/6, _catMovingTexture.Height, 0.4, _catMovingTexture);
+            _jumpingCatAnimation = new Animation(0, 5, _catJumpingTexture.Width/5, _catJumpingTexture.Height, 0.2, _catJumpingTexture);
+            
+            
             _coinAnimations = new();
             
             foreach (var c in _gameModel.coins)
-            {
-                _coinAnimations[c] = new CoinAnimation(6, _cointTexture.Width/6, _cointTexture.Height, _cointTexture);
-            }
+                _coinAnimations[c] = new Animation(0,4, _cointTexture.Width/6, _cointTexture.Height, 0.18, _cointTexture);
         }
+
+        public void LoadTexture()
+        {
+            _font  = _gameModel.CatGame.Content.Load<SpriteFont>("Font");
+            _cointTexture = _gameModel.CatGame.Content.Load<Texture2D>("coin");
+            _heart =  _gameModel.CatGame.Content.Load<Texture2D>("heart");
+            _emptyHeart =  _gameModel.CatGame.Content.Load<Texture2D>("emptyHeart");
+            _catCalmTexture =  _gameModel.CatGame.Content.Load<Texture2D>("calm_cat");
+            _catMovingTexture =  _gameModel.CatGame.Content.Load<Texture2D>("cat_moving");
+            _catJumpingTexture = _gameModel.CatGame.Content.Load<Texture2D>("jumping_cat");
+            _background = _gameModel.CatGame.Content.Load<Texture2D>("street");
+        }
+        
         public void Draw()
         {
+            DrawMap();
+            DrawCat();
             foreach (var c in _gameModel.coins) DrawCoin(c);
             DrawScore();
             DrawHeart();
         }
 
-        public void DrawCoin(Coin coin)
+        public void DrawCat()
+        {
+            if (_gameModel.Kitty.IsCalm)
+                DrawCurrentAnimationCat(_calmCatAnimation);
+            else if (_gameModel.Kitty.IsMoving)
+                DrawCurrentAnimationCat(_movingCatAnimation);
+            else DrawCurrentAnimationCat(_jumpingCatAnimation);
+        }
+        public void DrawCurrentAnimationCat(Animation animation)
+        {
+            
+            var frameX = (animation._currentFrame % animation._column) * animation._width;
+            var sourceRectangle = new Rectangle(frameX, 1, animation._width, animation._height);
+            _spriteBatch.Draw(animation._texture,new Vector2(650,680), sourceRectangle, Color.White, 
+                0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+            animation.Update();
+        }
+        
+        public void DrawMap()
+        {
+            var current = new Rectangle(0, 340, 500, 330);
+            var destinationRectangle = new Rectangle(0, 0, 
+                _spriteBatch.GraphicsDevice.Viewport.Width, 
+                _spriteBatch.GraphicsDevice.Viewport.Height);
+            _spriteBatch.Draw(_background, destinationRectangle, current, Color.White);
+        }
+        
+        public void DrawCoin(Coin coin) 
         {
             var animation = _coinAnimations[coin];
             var frameX = (animation._currentFrame % animation._column) * animation._width;

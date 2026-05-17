@@ -35,3 +35,8 @@ C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\obj\Debug\net9.0-windows\CatSW
 C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\coin.xnb
 C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\emptyHeart.xnb
 C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\heart.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\background_street.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\street.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\calm_cat.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\cat_moving.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\jumping_cat.xnb
