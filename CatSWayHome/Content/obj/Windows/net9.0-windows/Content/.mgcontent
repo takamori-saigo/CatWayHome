@@ -7,12 +7,16 @@
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/CalmButton.png</File>
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/coin.png</File>
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/Cursor.png</File>
+    <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/emptyHeart.png</File>
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/Font.spritefont</File>
+    <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/heart.png</File>
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/HoveringMenuButton.png</File>
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/menu_background.png</File>
     <File>C:/Users/gats/Desktop/asp/CatsWayHome/CatSWayHome/Content/PressedMenuButton.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

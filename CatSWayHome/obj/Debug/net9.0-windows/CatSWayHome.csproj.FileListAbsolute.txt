@@ -33,3 +33,5 @@ C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Conte
 C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\Cursor.xnb
 C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\obj\Debug\net9.0-windows\CatSWayHome.sourcelink.json
 C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\coin.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\emptyHeart.xnb
+C:\Users\gats\Desktop\asp\CatsWayHome\CatSWayHome\bin\Debug\net9.0-windows\Content\heart.xnb

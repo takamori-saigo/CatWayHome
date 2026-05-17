@@ -10,15 +10,13 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("CatSWayHome")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("CatSWayHome.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea4cc67bbf52f4f2d8322d656417da8adaf3fe76")]
-[assembly: System.Reflection.AssemblyProductAttribute("CatSWayHome")]
-[assembly: System.Reflection.AssemblyTitleAttribute("CatSWayHome")]
+[assembly: System.Reflection.AssemblyProductAttribute("CatSWayHome.Models")]
+[assembly: System.Reflection.AssemblyTitleAttribute("CatSWayHome.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
-[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
-[assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
 

@@ -4,8 +4,8 @@ public class Cat
 {
     public Cat()
     {
-        Health = 4;
-        Score = 0;
+        Health = 2;
+        Score = 55;
     }
     
     public int Health { get; private set; }
