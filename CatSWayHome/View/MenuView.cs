@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CatSWayHome.Models;
+using CatSWayHome.View.Buttons;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,14 +37,16 @@ public class MenuView: IViewGame
         
     }
 
-    public void Draw()
+    public void Draw() 
     {
         _spriteBatch.Draw(_background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
         
         
-        DrawButton();
+        DrawButton(_gameModel.StartMenuButton);
+        DrawButton(_gameModel.ExitMenuButton);
         
-        DrawButtonText();
+        DrawButtonText(_gameModel.StartMenuButton, "CONTINUE");
+        DrawButtonText(_gameModel.ExitMenuButton, "EXIT");
 
         DrawCursor();
     }
@@ -57,9 +60,9 @@ public class MenuView: IViewGame
             0f, Vector2.Zero, cursorScale, SpriteEffects.None, 0f);
     }
     
-    public void DrawButton()
+    
+    public void DrawButton(MenuButton menuButton)
     {
-        var menuButton = _gameModel.StartMenuButton;
         if (!menuButton.Clikced)
         {
             if (menuButton.IsHovered)
@@ -75,11 +78,9 @@ public class MenuView: IViewGame
         }
     }
     
-    public void DrawButtonText()
+    public void DrawButtonText(MenuButton menuButton, string textWhenClicled)
     {
-        var menuButton = _gameModel.StartMenuButton;
-        
-        var text = menuButton.IsFirstClick ? _gameModel.StartMenuButton.Text : "CONTINUE";
+        var text = menuButton.IsFirstClick ? menuButton.Text : textWhenClicled;
         var textSize = _font.MeasureString(text);
     
         var scaleX = menuButton.Width / textSize.X;

@@ -43,6 +43,7 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         _gameController.Update();
+        if (_gameModel.State == GameState.Exit) Exit();
         // TODO: Add your update logic here
         base.Update(gameTime);
     }
@@ -50,7 +51,7 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.LightPink);
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
         _viewGame.Draw();
         _spriteBatch.End();
         base.Draw(gameTime);

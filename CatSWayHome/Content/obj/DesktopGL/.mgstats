@@ -1,3 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/Cursor.png","C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/bin/DesktopGL/Cursor.xnb","TextureProcessor","Texture2DContent",305922,1349545,0,3491423
-"C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/Font.spritefont","C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/bin/DesktopGL/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2068,136217,0,348966
+"C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/coin.png","C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/bin/DesktopGL/coin.xnb","TextureProcessor","Texture2DContent",523,9013,0,1734532

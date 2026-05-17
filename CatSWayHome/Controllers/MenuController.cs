@@ -24,21 +24,32 @@ public class MenuController: IController
     
     public void isHovering(Point positionOfCursor)
     {
-        var button = _game.StartMenuButton;
-        var rectangle = new Rectangle(button.Position.X, button.Position.Y, button.Width, button.Height);
-        button.IsHovered = rectangle.Contains(positionOfCursor);
+        var buttonStart = _game.StartMenuButton;
+        var buttonExit = _game.ExitMenuButton;
+        var rectangleButtonStart = new Rectangle(buttonStart.Position.X, buttonStart.Position.Y, buttonStart.Width, buttonStart.Height);
+        var rectangleButtonExit = new Rectangle(buttonExit.Position.X, buttonExit.Position.Y, buttonExit.Width, buttonExit.Height);
+        buttonStart.IsHovered = rectangleButtonStart.Contains(positionOfCursor);
+        buttonExit.IsHovered = rectangleButtonExit.Contains(positionOfCursor);
     }
 
     public async void isClicked(MouseState state)
     {
-        var button = _game.StartMenuButton;
-        button.Clikced = button.IsHovered && state.LeftButton == ButtonState.Pressed;
-        if (button.Clikced)
+        var buttonStart = _game.StartMenuButton;
+        var buttonExit = _game.ExitMenuButton;
+        buttonExit.Clikced = buttonExit.IsHovered && state.LeftButton == ButtonState.Pressed;
+        buttonStart.Clikced = buttonStart.IsHovered && state.LeftButton == ButtonState.Pressed;
+        if (buttonStart.Clikced)
         {
-            if (button.IsFirstClick)
-                await Task.Delay(1000);
+            if (buttonStart.IsFirstClick)
+                await Task.Delay(600);
             _game.State = GameState.Playing;
-            button.IsFirstClick = false;
+            buttonStart.IsFirstClick = false;
+        }
+
+        if (buttonExit.Clikced)
+        {
+            await Task.Delay(600);
+            _game.State = GameState.Exit;
         }
     }
 }

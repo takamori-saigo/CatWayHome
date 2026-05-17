@@ -4,4 +4,5 @@ public enum GameState
 {
     Paused,
     Playing,
+    Exit,
 }

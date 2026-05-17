@@ -5,6 +5,7 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/CalmButton.png</File>
+    <File>C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/coin.png</File>
     <File>C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/Cursor.png</File>
     <File>C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/Font.spritefont</File>
     <File>C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/HoveringMenuButton.png</File>
@@ -12,6 +13,7 @@
     <File>C:/Users/gats/Desktop/asp/CatSWayHome/CatSWayHome/Content/PressedMenuButton.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
