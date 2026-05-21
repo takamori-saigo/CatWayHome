@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CatSWayHome.Models;
-using CatSWayHome.View.Buttons;
+using CatSWayHome.Models.Buttons;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -18,28 +19,52 @@ public class MenuView: IViewGame
     private Texture2D _clickedButton;
     private Texture2D _cursorTexture;
     private SpriteBatch _spriteBatch;
+    private ContentManager _content;
     private SpriteFont _font;
-    private int screenWidth;
-    private int screenHeight;
+    private int _screenWidth;
+    private int _screenHeight;
     
-    public MenuView(SpriteBatch spriteBatch, GameModel gameModel)
+    public MenuView(SpriteBatch spriteBatch, GameModel gameModel, ContentManager content)
     {
         _spriteBatch = spriteBatch;
         _gameModel = gameModel;
-        _calmButton = _gameModel.CatGame.Content.Load<Texture2D>("CalmButton");
-        _hoveringButton = _gameModel.CatGame.Content.Load<Texture2D>("HoveringMenuButton");
-        _clickedButton = _gameModel.CatGame.Content.Load<Texture2D>("PressedMenuButton");
-        _background = _gameModel.CatGame.Content.Load<Texture2D>("menu_background");
-        _cursorTexture = _gameModel.CatGame.Content.Load<Texture2D>("Cursor");
-        _font = _gameModel.CatGame.Content.Load<SpriteFont>("Font");
-        screenWidth = _gameModel.CatGame.GraphicsDevice.Viewport.Width;
-        screenHeight = _gameModel.CatGame.GraphicsDevice.Viewport.Height;
-        
+        _content = content;
+        _screenWidth = _spriteBatch.GraphicsDevice.Viewport.Width;
+        _screenHeight = _spriteBatch.GraphicsDevice.Viewport.Height;
+        LoadContent();
+        InitializeButtons();
     }
 
-    public void Draw() 
+    private void LoadContent()
     {
-        _spriteBatch.Draw(_background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
+        _calmButton = _content.Load<Texture2D>("CalmButton");
+        _hoveringButton = _content.Load<Texture2D>("HoveringMenuButton");
+        _clickedButton = _content.Load<Texture2D>("PressedMenuButton");
+        _background = _content.Load<Texture2D>("menu_background");
+        _cursorTexture = _content.Load<Texture2D>("Cursor");
+        _font = _content.Load<SpriteFont>("Font");
+    }
+    
+    public void InitializeButtons()
+    {
+        // TODO: Make Udaptive Buttons
+        var startButton = _gameModel.StartMenuButton;
+        startButton.Text = "START";
+        startButton.Position = new Point(_screenWidth / 2 - 200, _screenHeight / 2 - 60);
+        startButton.Width = 400;
+        startButton.Height = 120;
+
+        var exitButton = _gameModel.ExitMenuButton;
+        exitButton.Text = "EXIT";
+        exitButton.Position = new Point(_screenWidth / 2 - 200, _screenHeight / 2 - 60 + 150);
+        exitButton.Width = 400;
+        exitButton.Height = 120;
+    }
+    
+    public void Draw()
+    {
+        var rectForBackGround = new Rectangle(0, 0, _screenWidth, _screenHeight);
+        _spriteBatch.Draw(_background, rectForBackGround, Color.White);
         
         
         DrawButton(_gameModel.StartMenuButton);

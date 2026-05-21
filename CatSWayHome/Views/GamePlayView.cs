@@ -3,6 +3,7 @@
     using CatSWayHome.Models;
     using CatSWayHome.View.Animations;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
     namespace CatSWayHome.View;
@@ -25,19 +26,25 @@
         private Animation _calmCatAnimation;
         private Animation _movingCatAnimation;
         private Animation _jumpingCatAnimation;
-        public GamePlayView(SpriteBatch spriteBatch, GameModel gameModel)
+        
+        private ContentManager _contentManager;
+        public GamePlayView(SpriteBatch spriteBatch, GameModel gameModel, ContentManager content)
         {
             _spriteBatch = spriteBatch;
             _gameModel = gameModel;
+            _contentManager = content;
+            
             LoadTexture();
-            
 
-            
-            
+            LoadAnimations();
+        }
+
+        public void LoadAnimations()
+        {
             _calmCatAnimation = new Animation(0, 4, _catCalmTexture.Width/4, _catCalmTexture.Height, 0.6, _catCalmTexture);
             
             
-            _movingCatAnimation = new Animation(0, 6, _catMovingTexture.Width/6, _catMovingTexture.Height, 0.4, _catMovingTexture);
+            _movingCatAnimation = new Animation(0, 6, _catMovingTexture.Width/6, _catMovingTexture.Height, 0.2, _catMovingTexture);
             _jumpingCatAnimation = new Animation(0, 5, _catJumpingTexture.Width/5, _catJumpingTexture.Height, 0.2, _catJumpingTexture);
             
             
@@ -46,17 +53,17 @@
             foreach (var c in _gameModel.coins)
                 _coinAnimations[c] = new Animation(0,4, _cointTexture.Width/6, _cointTexture.Height, 0.18, _cointTexture);
         }
-
+        
         public void LoadTexture()
         {
-            _font  = _gameModel.CatGame.Content.Load<SpriteFont>("Font");
-            _cointTexture = _gameModel.CatGame.Content.Load<Texture2D>("coin");
-            _heart =  _gameModel.CatGame.Content.Load<Texture2D>("heart");
-            _emptyHeart =  _gameModel.CatGame.Content.Load<Texture2D>("emptyHeart");
-            _catCalmTexture =  _gameModel.CatGame.Content.Load<Texture2D>("calm_cat");
-            _catMovingTexture =  _gameModel.CatGame.Content.Load<Texture2D>("cat_moving");
-            _catJumpingTexture = _gameModel.CatGame.Content.Load<Texture2D>("jumping_cat");
-            _background = _gameModel.CatGame.Content.Load<Texture2D>("street");
+            _font  = _contentManager.Load<SpriteFont>("Font");
+            _cointTexture = _contentManager.Load<Texture2D>("coin");
+            _heart =  _contentManager.Load<Texture2D>("heart");
+            _emptyHeart =  _contentManager.Load<Texture2D>("emptyHeart");
+            _catCalmTexture =  _contentManager.Load<Texture2D>("calm_cat");
+            _catMovingTexture =  _contentManager.Load<Texture2D>("cat_moving");
+            _catJumpingTexture = _contentManager.Load<Texture2D>("jumping_cat");
+            _background = _contentManager.Load<Texture2D>("new_background");
         }
         
         public void Draw()
@@ -74,21 +81,21 @@
                 DrawCurrentAnimationCat(_calmCatAnimation);
             else if (_gameModel.Kitty.IsMoving)
                 DrawCurrentAnimationCat(_movingCatAnimation);
-            else DrawCurrentAnimationCat(_jumpingCatAnimation);
+            else if (_gameModel.Kitty.IsJump) DrawCurrentAnimationCat(_jumpingCatAnimation);
         }
         public void DrawCurrentAnimationCat(Animation animation)
         {
             
             var frameX = (animation._currentFrame % animation._column) * animation._width;
             var sourceRectangle = new Rectangle(frameX, 1, animation._width, animation._height);
-            _spriteBatch.Draw(animation._texture,new Vector2(650,680), sourceRectangle, Color.White, 
-                0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(animation._texture,_gameModel.Kitty.InitionalPosition, sourceRectangle, Color.White, 
+                0f, Vector2.Zero, 1f, _gameModel.Kitty.IsGoingBack ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             animation.Update();
         }
         
         public void DrawMap()
         {
-            var current = new Rectangle(0, 340, 500, 330);
+            var current = new Rectangle(_gameModel.Kitty.DeltaX, 680, 900, 630);
             var destinationRectangle = new Rectangle(0, 0, 
                 _spriteBatch.GraphicsDevice.Viewport.Width, 
                 _spriteBatch.GraphicsDevice.Viewport.Height);
