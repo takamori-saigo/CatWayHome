@@ -14,19 +14,23 @@ public class Game1 : Game
     private GameController _gameController;
     private ViewGame _viewGame;
     private GameModel _gameModel;
+    private int _screenWidth;
+    private int _screenHeight;
     public Game1()
     {
         Content.RootDirectory = "Content";
         _graphics = new GraphicsDeviceManager(this);
         IsMouseVisible = false;
+        _screenWidth = 1600;
+        _screenHeight = 900;
     }
 
     protected override void Initialize()
     {
-        _graphics.PreferredBackBufferWidth = 1600;
-        _graphics.PreferredBackBufferHeight = 900;
+        _graphics.PreferredBackBufferWidth = _screenWidth;
+        _graphics.PreferredBackBufferHeight = _screenHeight;
         _graphics.ApplyChanges();
-        _gameModel = new GameModel(this);
+        _gameModel = new GameModel();
         _gameController = new GameController(_gameModel);
         base.Initialize();
         
@@ -36,15 +40,13 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _viewGame = new ViewGame(_spriteBatch, _gameModel);
-        // TODO: use this.Content to load your game content here
+        _viewGame = new ViewGame(_spriteBatch, _gameModel, Content);
     }
     
     protected override void Update(GameTime gameTime)
     {
         _gameController.Update();
         if (_gameModel.State == GameState.Exit) Exit();
-        // TODO: Add your update logic here
         base.Update(gameTime);
     }
 

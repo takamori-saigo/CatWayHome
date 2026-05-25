@@ -1,4 +1,5 @@
-﻿    using System.Collections.Generic;
+﻿    using System;
+    using System.Collections.Generic;
     using CatSWayHome.Controllers;
     using CatSWayHome.Models;
     using CatSWayHome.View.Animations;
@@ -77,29 +78,47 @@
 
         public void DrawCat()
         {
-            if (_gameModel.Kitty.IsCalm)
-                DrawCurrentAnimationCat(_calmCatAnimation);
+            Console.WriteLine(_gameModel.Kitty.IsJump);
+            if (_gameModel.Kitty.IsJump)
+                DrawCurrentAnimationCat(_jumpingCatAnimation);
             else if (_gameModel.Kitty.IsMoving)
                 DrawCurrentAnimationCat(_movingCatAnimation);
-            else if (_gameModel.Kitty.IsJump) DrawCurrentAnimationCat(_jumpingCatAnimation);
+            else
+                DrawCurrentAnimationCat(_calmCatAnimation);
+            
         }
         public void DrawCurrentAnimationCat(Animation animation)
         {
             
             var frameX = (animation._currentFrame % animation._column) * animation._width;
+            var currentPosition = _gameModel.Kitty.InitialPosition +
+                                  new System.Numerics.Vector2(0, _gameModel.Kitty.DeltaY);
             var sourceRectangle = new Rectangle(frameX, 1, animation._width, animation._height);
-            _spriteBatch.Draw(animation._texture,_gameModel.Kitty.InitionalPosition, sourceRectangle, Color.White, 
+            _spriteBatch.Draw(animation._texture,currentPosition, sourceRectangle, Color.White, 
                 0f, Vector2.Zero, 1f, _gameModel.Kitty.IsGoingBack ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             animation.Update();
         }
         
         public void DrawMap()
         {
-            var current = new Rectangle(_gameModel.Kitty.DeltaX, 680, 900, 630);
-            var destinationRectangle = new Rectangle(0, 0, 
-                _spriteBatch.GraphicsDevice.Viewport.Width, 
-                _spriteBatch.GraphicsDevice.Viewport.Height);
-            _spriteBatch.Draw(_background, destinationRectangle, current, Color.White);
+            var viewport = _spriteBatch.GraphicsDevice.Viewport;
+            var bgWidth = _background.Width;
+            var sourceWidth = 900;
+            var scrollX = (_gameModel.Kitty.DeltaX % bgWidth + bgWidth) % bgWidth;
+            var scale = (float)viewport.Width / sourceWidth;
+            var firstWidth = Math.Min(sourceWidth, bgWidth-scrollX);
+            var source1 = new Rectangle(scrollX, 800, firstWidth, 800);
+            _spriteBatch.Draw(_background, Vector2.Zero, source1, 
+                Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            
+            
+            if (firstWidth < sourceWidth)
+            {
+                var secondWidth = sourceWidth - firstWidth;
+                var source2 = new Rectangle(0, 800, secondWidth, 800);
+                var pos2 = new Vector2(firstWidth * scale, 0);
+                _spriteBatch.Draw(_background, pos2, source2, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            }
         }
         
         public void DrawCoin(Coin coin) 
