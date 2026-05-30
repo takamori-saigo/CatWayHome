@@ -1,4 +1,5 @@
-﻿using CatSWayHome.Models;
+﻿using System.Linq;
+using CatSWayHome.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,6 +12,7 @@ public class GamePlayController: IController
     {
         _game = gameModel;
     }
+    
     public void Update()
     {
         var keyBoard = Keyboard.GetState();
@@ -26,6 +28,14 @@ public class GamePlayController: IController
         
         CatMoving(keyBoard);
         ApplyPhysics(elapsed);
+    }
+
+    private void UpdateCoordsEntities()
+    {
+        foreach (var e in _game.Entities)
+        {
+            e.Update(_game.Kitty.DeltaX);
+        }
     }
     
     private void ApplyPhysics(float elapsed)
@@ -46,19 +56,19 @@ public class GamePlayController: IController
         }
     }
     
-    public void CatMoving(KeyboardState keyboard)
+    private void CatMoving(KeyboardState keyboard)
     {
-        var velocity = _game.Kitty.Velocity;
+        var velocity = _game.Kitty.VelocityX;
         var cat = _game.Kitty;
         _game.Kitty.IsMoving = false;
-        if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
+        if ((keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right)) && !CheckKolition(cat.DeltaX + velocity))
         {
             cat.IsCalm = false;
             cat.IsMoving = true;
             cat.DeltaX += velocity;
             cat.IsGoingBack = false;
         }
-        else if (keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.Left))
+        else if ((keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.Left)) && !CheckKolition(cat.DeltaX - velocity))
         {
             cat.IsCalm = false;
             cat.IsMoving = true;
@@ -70,5 +80,24 @@ public class GamePlayController: IController
             cat.IsCalm = true;
             cat.IsMoving = false;
         }
+        UpdateCoordsEntities();
+    }
+
+    private bool CheckKolition(int newX)
+    {
+        var cat = _game.Kitty;
+        var catRect = new Rectangle((int)cat.InitialPosition.X, (int)(cat.InitialPosition.Y + cat.DeltaY),
+            (int)cat.WidthTexture, (int)cat.HeightTexture);
+        foreach (var e in _game.Entities)
+        {
+            var entityScreenX = e.WorldPosition.X - newX * e.ParallaxFactor;
+            var entityRect = new Rectangle((int)entityScreenX, e.PositionGround, (int)e.WidthTexture, (int)e.HeightTexture);
+            if (catRect.Intersects(entityRect))
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

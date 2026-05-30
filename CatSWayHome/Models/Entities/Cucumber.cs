@@ -2,17 +2,12 @@
 
 namespace CatSWayHome.Models;
 
-public class Cucumber: Entity
+public class Cucumber: BaseEntity
 {
-    private int YPositionOfGround = 795;
-    public Vector2 WorldPosition{ get; set; }
+    public override int PositionGround { get; set; } = 795;
+    
     public Cucumber(int x)
     {
-        WorldPosition = new Vector2(x, YPositionOfGround);
-    }
-
-    public override void Update(int deltaX)
-    {
-        Position = new Vector2(WorldPosition.X - deltaX * ParallaxFactor, YPositionOfGround);
+        WorldPosition = new Vector2(x, PositionGround);
     }
 }

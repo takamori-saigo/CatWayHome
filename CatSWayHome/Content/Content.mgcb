@@ -61,6 +61,12 @@
 /processorParam:TextureFormat=Color
 /build:cat_moving.png
 
+#begin catWalking.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:catWalking.wav
+
 #begin coin.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,6 +78,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:coin.png
+
+#begin Cucomber.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Cucomber.png
 
 #begin Cursor.png
 /importer:TextureImporter
@@ -128,6 +146,12 @@
 /processorParam:TextureFormat=Color
 /build:HoveringMenuButton.png
 
+#begin jumping_cat_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:jumping_cat_sound.wav
+
 #begin jumping_cat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -152,6 +176,12 @@
 /processorParam:TextureFormat=Color
 /build:menu_background.png
 
+#begin menu_Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:menu_Sound.wav
+
 #begin new_background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -175,6 +205,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:PressedMenuButton.png
+
+#begin rubish.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:rubish.png
 
 #begin street.jpg
 /importer:TextureImporter

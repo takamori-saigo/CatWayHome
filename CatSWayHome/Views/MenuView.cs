@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CatSWayHome.Models;
 using CatSWayHome.Models.Buttons;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;   
+
 
 
 namespace CatSWayHome.View;
@@ -18,6 +19,8 @@ public class MenuView: IViewGame
     private Texture2D _hoveringButton;
     private Texture2D _clickedButton;
     private Texture2D _cursorTexture;
+    private SoundEffect _menuSound;
+    private SoundEffectInstance _menuSoundInstance;
     private SpriteBatch _spriteBatch;
     private ContentManager _content;
     private SpriteFont _font;
@@ -43,6 +46,9 @@ public class MenuView: IViewGame
         _background = _content.Load<Texture2D>("menu_background");
         _cursorTexture = _content.Load<Texture2D>("Cursor");
         _font = _content.Load<SpriteFont>("Font");
+        _menuSound = _content.Load<SoundEffect>("menu_Sound");
+        _menuSoundInstance = _menuSound.CreateInstance();
+        _menuSoundInstance.IsLooped = true;
     }
     
     public void InitializeButtons()
@@ -119,5 +125,17 @@ public class MenuView: IViewGame
     
         _spriteBatch.DrawString(_font, text, textPosition, Color.Black, 
             0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+    }
+
+    public void PlayMusic()
+    {
+        if (_menuSoundInstance.State != SoundState.Playing)
+            _menuSoundInstance.Play();
+    }
+    
+    public void StopMusic()
+    {
+        if (_menuSoundInstance.State == SoundState.Playing)
+            _menuSoundInstance.Stop();
     }
 }

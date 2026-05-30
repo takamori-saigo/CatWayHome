@@ -25,10 +25,16 @@ public class ViewGame
     public void Draw()
     {
         if (_gameModel.State == GameState.Paused)
+        {
             _currentView = _menuView;
+            _menuView.PlayMusic();
+        }
         if (_gameModel.State == GameState.Playing)
+        {
             _currentView = _gamePlayView;
-        _currentView.Draw();
+            _menuView.StopMusic();
+        }
         
+        _currentView.Draw();
     }
 }

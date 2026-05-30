@@ -2,10 +2,7 @@
 
 namespace CatSWayHome.Models;
 
-public class Coin: Entity
+public class Coin: BaseEntity
 {
-    public override void Update(int deltaX)
-    {
-        
-    }
+
 }
