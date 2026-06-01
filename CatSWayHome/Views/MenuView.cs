@@ -53,7 +53,6 @@ public class MenuView: IViewGame
     
     public void InitializeButtons()
     {
-        // TODO: Make Udaptive Buttons
         var startButton = _gameModel.StartMenuButton;
         startButton.Text = "START";
         startButton.Position = new Point(_screenWidth / 2 - 200, _screenHeight / 2 - 60);

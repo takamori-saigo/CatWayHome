@@ -16,7 +16,7 @@ public class GameModel
     
     public GameModel()
     {
-        State = GameState.Paused;
+        State = GameState.Playing;
         InitializeEntities();
     }
 
@@ -37,7 +37,7 @@ public class GameModel
     private void InitializeStaticEntities()
     {
         var positionsRubish = new[] { 0 };
-        var positionsCucumbers = new[] { 350 };
+        var positionsCucumbers = new[] { 1200, 1700, 2200 };
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
     }

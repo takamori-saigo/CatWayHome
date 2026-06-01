@@ -14,14 +14,14 @@ public class Cat
         InitialPosition = new Vector2(650, 680);
     }
 
-    public const float Gravity = 1800f;
+    public const float Gravity = 1300f;
     public const float JumpVelocity = -800f;     
     
     public int Health { get; set; }
     
     public Vector2 InitialPosition { get; private set; } 
     public int DeltaX { get; set; }
-    public int VelocityX { get; private set; }
+    public int VelocityX { get; set; }
 
     public float DeltaY { get; set; }
     public float VelocityY { get; set; }
@@ -30,6 +30,7 @@ public class Cat
     public bool IsJump { get; set; }
     public bool IsMoving { get; set; }
     public bool IsGoingBack { get; set; }
+    public bool IsKnockback { get; set; }
     /*
     public int Score { get; private set; }
     */

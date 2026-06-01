@@ -1,4 +1,5 @@
 ﻿using CatSWayHome.Models;
+using Microsoft.Xna.Framework;
 
 namespace CatSWayHome.Controllers;
 
@@ -15,13 +16,13 @@ public class GameController
         _gamePlayController = new GamePlayController(_gameModel);
         _currentController = _menuController;
     }
-    public void Update()
+    public void Update(GameTime gameTime)
     {
         
         if (_gameModel.State == GameState.Paused)
             _currentController = _menuController;
         if (_gameModel.State == GameState.Playing)
             _currentController = _gamePlayController;
-        _currentController.Update();
+        _currentController.Update(gameTime);
     }
 }

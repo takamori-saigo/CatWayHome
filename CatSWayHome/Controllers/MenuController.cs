@@ -15,7 +15,7 @@ public class MenuController: IController
     {
         _game = game;
     }
-    public void Update()
+    public void Update(GameTime gameTime)
     {
         var mouseState = Mouse.GetState();
         isHovering(mouseState.Position);

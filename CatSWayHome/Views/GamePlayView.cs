@@ -54,9 +54,9 @@
 
         public void LoadAnimations()
         {
-            _calmCatAnimation = new Animation(0, 4, _catCalmTexture.Width/4, _catCalmTexture.Height, 0.6, _catCalmTexture);
+            _calmCatAnimation = new Animation(0, 3, _catCalmTexture.Width/3, _catCalmTexture.Height, 0.6, _catCalmTexture);
             _movingCatAnimation = new Animation(0, 6, _catMovingTexture.Width/6, _catMovingTexture.Height, 0.2, _catMovingTexture);
-            _jumpingCatAnimation = new Animation(0, 5, _catJumpingTexture.Width/5, _catJumpingTexture.Height, 0.2, _catJumpingTexture);
+            _jumpingCatAnimation = new Animation(0, 5, _catJumpingTexture.Width/5, _catJumpingTexture.Height, 0.3, _catJumpingTexture);
             
             
             /*
@@ -75,7 +75,7 @@
             */
             _heart =  _contentManager.Load<Texture2D>("heart");
             _emptyHeart =  _contentManager.Load<Texture2D>("emptyHeart");
-            _catCalmTexture =  _contentManager.Load<Texture2D>("calm_cat");
+            _catCalmTexture =  _contentManager.Load<Texture2D>("cat_calmgR");
             _catMovingTexture =  _contentManager.Load<Texture2D>("cat_moving");
             _catJumpingTexture = _contentManager.Load<Texture2D>("jumping_cat");
             _background = _contentManager.Load<Texture2D>("new_background");
@@ -125,8 +125,8 @@
                         
                         if (cuc.HeightTexture == 0)
                         {
-                            cuc.HeightTexture = _cucumber.Height * scale;
-                            cuc.WidthTexture = _cucumber.Width * scale;
+                            cuc.HeightTexture = _cucumber.Height * scale ;
+                            cuc.WidthTexture = _cucumber.Width * scale ;
                         }
                         
                         DrawHitBox(cuc.Position, (int)cuc.WidthTexture, (int)cuc.HeightTexture);
@@ -167,11 +167,15 @@
             var currentPosition = _gameModel.Kitty.InitialPosition +
                                   new Vector2(0, _gameModel.Kitty.DeltaY);
             var sourceRectangle = new Rectangle(frameX, 1, animation._width, animation._height);
+
+            if (animation == _movingCatAnimation)
+            {
+                _gameModel.Kitty.HeightTexture = sourceRectangle.Height;
+                _gameModel.Kitty.WidthTexture = sourceRectangle.Width;
+            }
+
             
-            _gameModel.Kitty.HeightTexture = sourceRectangle.Height;
-            _gameModel.Kitty.WidthTexture = sourceRectangle.Width;
-            
-            DrawHitBox(currentPosition, (int)_gameModel.Kitty.WidthTexture, (int)_gameModel.Kitty.HeightTexture);
+            DrawHitBox(new Vector2(currentPosition.X+35, currentPosition.Y), (int)_gameModel.Kitty.WidthTexture-75, (int)_gameModel.Kitty.HeightTexture);
 
 
             _spriteBatch.Draw(animation._texture,currentPosition, sourceRectangle, Color.White, 
