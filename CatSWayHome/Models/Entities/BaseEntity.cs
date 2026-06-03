@@ -15,6 +15,7 @@ public abstract class BaseEntity
     public virtual string DialogMessage => null;
     public virtual float DialogTriggerDistance => 400f;
     public bool HasTriggeredDialog { get; set; }
+
     public void Update(int deltaX)
     {
         Position = new Vector2(WorldPosition.X - deltaX * ParallaxFactor, PositionGround);

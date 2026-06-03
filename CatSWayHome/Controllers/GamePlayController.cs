@@ -219,14 +219,23 @@ public class GamePlayController: IController
     {
         switch (entity)
         {
-            case Cucumber:
+            case Cucumber :
                 _cat.Health--;
                 _cat.VelocityY = Cat.JumpVelocity;
                 _cat.IsJump = true;
                 _cat.IsKnockback = true;
                 break;
+            case Fish :
+                var fish = entity as Fish;
+                if (_cat.Health < 4)
+                    _cat.Health++;
+                fish.Take = true;
+                _game.Entities.Remove(fish);
+                break;
         }
 
+        
+        
         if (entity.IsSurface && entity.PositionGround >= _cat.InitialPosition.Y + _cat.DeltaY)
         {
             _cat.DeltaY = entity.PositionGround - _cat.InitialPosition.Y - _cat.HeightTexture;
