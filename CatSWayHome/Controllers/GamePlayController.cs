@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Vector2 = System.Numerics.Vector2;
 
+
 namespace CatSWayHome.Controllers;
 
 public class GamePlayController: IController
@@ -23,6 +24,39 @@ public class GamePlayController: IController
         var keyBoard = Keyboard.GetState();
         var elapsed = 1f / 60f;
         if (keyBoard.IsKeyDown(Keys.Escape)) _game.State = GameState.Paused;
+
+        if (_cat.IsFirstLaunch)
+        {
+            _cat.DialogText = "Welcome to the game!";
+            _cat.ShowDialog = true;
+            _cat.DialogCharIndex = 0;
+            _cat.DialogCharTimer = 0;
+            _cat.IsFirstLaunch = false;
+        }
+
+        if (_cat.ShowDialog)
+        {
+            if (_cat.DialogCharIndex < _cat.DialogText.Length)
+            {
+                _cat.DialogCharTimer += elapsed;
+                if (_cat.DialogCharTimer >= 0.15f)
+                {
+                    _cat.DialogCharIndex++;
+                    _cat.DialogCharTimer = 0;
+                }
+            }
+            else
+            {
+                _cat.DialogTimeLeft -= elapsed;
+                if (_cat.DialogTimeLeft <= 0)
+                    _cat.ShowDialog = false;
+            }
+        }
+        else
+        {
+            CheckEntityProximity();
+        }
+
         CatMoving(keyBoard);
         ApplyPhysics(elapsed);
     }
@@ -61,6 +95,40 @@ public class GamePlayController: IController
         
         if (_cat.IsKnockback)
             _cat.DeltaX += (_cat.IsGoingBack? 1 : -1) * _cat.VelocityX;
+    }
+
+    private void TriggerDialog(string message)
+    {
+        _cat.DialogText = message;
+        _cat.ShowDialog = true;
+        _cat.DialogTimeLeft = 5f;
+        _cat.DialogCharIndex = 0;
+        _cat.DialogCharTimer = 0;
+    }
+
+    private void CheckEntityProximity()
+    {
+        var catScreenX = _cat.InitialPosition.X;
+        var catScreenY = _cat.InitialPosition.Y + _cat.DeltaY;
+
+        foreach (var e in _game.Entities)
+        {
+            if (e.DialogMessage == null || e.HasTriggeredDialog)
+                continue;
+
+            var entityScreenX = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
+            var entityScreenY = e.PositionGround;
+            var dx = catScreenX - entityScreenX;
+            var dy = catScreenY - entityScreenY;
+            var distance = Math.Sqrt(dx * dx + dy * dy);
+
+            if (distance <= e.DialogTriggerDistance)
+            {
+                e.HasTriggeredDialog = true;
+                TriggerDialog(e.DialogMessage);
+                return;
+            }
+        }
     }
 
     private bool CheckStandingOnSurface()
@@ -165,6 +233,12 @@ public class GamePlayController: IController
             _cat.VelocityY = 0;
             _cat.IsJump = false;
             _cat.OnTheObject = true;
+        }
+
+        if (entity.DialogMessage != null && !entity.HasTriggeredDialog && !_cat.ShowDialog)
+        {
+            entity.HasTriggeredDialog = true;
+            TriggerDialog(entity.DialogMessage);
         }
     } 
 }

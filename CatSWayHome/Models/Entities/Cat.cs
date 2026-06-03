@@ -34,6 +34,15 @@ public class Cat
     public bool CatWasMoving { get; set; }
     public bool CatWasJumping { get; set; }
     public bool OnTheObject { get; set; }
+
+    public bool isFirstStart { get; set; }
+    
+    public bool ShowDialog { get; set; }
+    public float DialogTimeLeft { get; set; }
+    public string DialogText { get; set; }
+    public bool IsFirstLaunch { get; set; } = true;
+    public int DialogCharIndex { get; set; }
+    public float DialogCharTimer { get; set; }
     /*
     public int Score { get; private set; }
     */

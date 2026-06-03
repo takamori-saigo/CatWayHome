@@ -11,4 +11,6 @@ public class Bench: BaseEntity
     {
         WorldPosition = new Vector2(x, PositionGround);
     }
+
+    public override string DialogMessage => "Bench";
 }
