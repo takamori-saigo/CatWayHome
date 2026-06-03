@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CatSWayHome.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -33,7 +34,15 @@ public class DrawEntities: IDrawElement
                 case Rubbish:
                 {
                     var rub = e;
-                    scale = 0.37f;
+                    scale = 0.45f;
+                    /*if (rub.HeightTexture == 0)
+                    {
+                        rub.HeightTexture = _rubbish.Height * scale;
+                        rub.WidthTexture = _rubbish.Width * scale ;
+                        rub.HitBoxPoisitionY = 100;
+                    }*/
+                    var temp = new Vector2(rub.Position.X,rub.Position.Y-rub.HitBoxPoisitionY);
+                    DebugClassHitbox.DrawHitBox(temp , _spriteBatch, (int)rub.WidthTexture,  (int)rub.HeightTexture + rub.HitBoxPoisitionY);
                     _spriteBatch.Draw(_rubbish, rub.Position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
                     break;
                 }
@@ -70,8 +79,8 @@ public class DrawEntities: IDrawElement
 
     public void LoadContent()
     {
-        _rubbish = _content.Load<Texture2D>("rubish");
-        _cucumber = _content.Load<Texture2D>("Cucomber");
-        _bench = _content.Load<Texture2D>("Bench");
+        _rubbish = _content.Load<Texture2D>("Entities/rubish");
+        _cucumber = _content.Load<Texture2D>("Entities/Cucomber");
+        _bench = _content.Load<Texture2D>("Entities/Bench");
     }
 }

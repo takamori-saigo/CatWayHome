@@ -23,7 +23,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:background_street.png
+/build:background/background_street.png
 
 #begin Bench.png
 /importer:TextureImporter
@@ -35,7 +35,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Bench.png
+/build:Entities/Bench.png
 
 #begin CalmButton.png
 /importer:TextureImporter
@@ -47,7 +47,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:CalmButton.png
+/build:buttoms/CalmButton.png
 
 #begin cat_calmgR.png
 /importer:TextureImporter
@@ -59,7 +59,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:cat_calmgR.png
+/build:Cat/cat_calmgR.png
 
 #begin cat_moving.png
 /importer:TextureImporter
@@ -71,13 +71,13 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:cat_moving.png
+/build:Cat/cat_moving.png
 
 #begin catWalking.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:catWalking.wav
+/build:Cat/catWalking.wav
 
 #begin coin.png
 /importer:TextureImporter
@@ -89,7 +89,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:coin.png
+/build:Entities/coin.png
 
 #begin Cucomber.png
 /importer:TextureImporter
@@ -101,7 +101,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Cucomber.png
+/build:Entities/Cucomber.png
 
 #begin Cursor.png
 /importer:TextureImporter
@@ -113,7 +113,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Cursor.png
+/build:background/Cursor.png
 
 #begin emptyHeart.png
 /importer:TextureImporter
@@ -125,14 +125,14 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:emptyHeart.png
+/build:Hearts/emptyHeart.png
 
 #begin Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Font.spritefont
+/build:background/Font.spritefont
 
 #begin heart.png
 /importer:TextureImporter
@@ -144,7 +144,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:heart.png
+/build:Hearts/heart.png
 
 #begin HoveringMenuButton.png
 /importer:TextureImporter
@@ -156,13 +156,13 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:HoveringMenuButton.png
+/build:buttoms/HoveringMenuButton.png
 
 #begin jumping_cat_sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:jumping_cat_sound.wav
+/build:Cat/jumping_cat_sound.wav
 
 #begin jumping_cat.png
 /importer:TextureImporter
@@ -174,7 +174,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:jumping_cat.png
+/build:Cat/jumping_cat.png
 
 #begin menu_background.png
 /importer:TextureImporter
@@ -186,13 +186,13 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:menu_background.png
+/build:background/menu_background.png
 
 #begin menu_Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:menu_Sound.wav
+/build:buttoms/menu_Sound.wav
 
 #begin new_background.png
 /importer:TextureImporter
@@ -204,7 +204,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:new_background.png
+/build:background/new_background.png
 
 #begin PressedMenuButton.png
 /importer:TextureImporter
@@ -216,7 +216,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:PressedMenuButton.png
+/build:buttoms/PressedMenuButton.png
 
 #begin rubish.png
 /importer:TextureImporter
@@ -228,7 +228,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:rubish.png
+/build:Entities/rubish.png
 
 #begin street.jpg
 /importer:TextureImporter
@@ -240,5 +240,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:street.jpg
+/build:background/street.jpg
 

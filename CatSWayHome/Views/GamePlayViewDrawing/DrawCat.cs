@@ -16,6 +16,7 @@ public class DrawCat: IDrawElement
     private Texture2D _catCalmTexture;
     private Texture2D _catMovingTexture;
     private Texture2D _catJumpingTexture;
+    private Texture2D _dialogWindow; 
     
     private Animation _calmCatAnimation;
     private Animation _movingCatAnimation;
@@ -42,13 +43,13 @@ public class DrawCat: IDrawElement
     
     public void LoadContent()
     {
-        _catCalmTexture =  _contentManager.Load<Texture2D>("cat_calmgR");
-        _catMovingTexture =  _contentManager.Load<Texture2D>("cat_moving");
-        _catJumpingTexture = _contentManager.Load<Texture2D>("jumping_cat");
-        _walkCatSound = _contentManager.Load<SoundEffect>("catWalking");
+        _catCalmTexture =  _contentManager.Load<Texture2D>("Cat/cat_calmgR");
+        _catMovingTexture =  _contentManager.Load<Texture2D>("Cat/cat_moving");
+        _catJumpingTexture = _contentManager.Load<Texture2D>("Cat/jumping_cat");
+        _walkCatSound = _contentManager.Load<SoundEffect>("Cat/catWalking");
         _walkCatSoundInstance = _walkCatSound.CreateInstance();
         _walkCatSoundInstance.IsLooped = true;
-        _jumpCatSound = _contentManager.Load<SoundEffect>("jumping_cat_sound");
+        _jumpCatSound = _contentManager.Load<SoundEffect>("Cat/jumping_cat_sound");
         LoadAnimations();
     }
     
@@ -72,7 +73,6 @@ public class DrawCat: IDrawElement
     
     private void DrawCurrentAnimationCat(Animation animation)
     {
-            
         var frameX = (animation._currentFrame % animation._column) * animation._width;
         var currentPosition = _cat.InitialPosition +
                               new Vector2(0, _cat.DeltaY);

@@ -8,4 +8,6 @@ public class Rubbish: BaseEntity
     {
         WorldPosition = new Vector2(x, PositionGround);
     }
+
+    public override int PositionGround { get; set; } = 670;
 }

@@ -19,7 +19,6 @@ public class GamePlayController: IController
 
     public void Update(GameTime gameTime)
     {
-        Console.WriteLine($"cat {_cat.DeltaY}");
         if (_cat.Health == 0) _game.State = GameState.Paused;
         var keyBoard = Keyboard.GetState();
         var elapsed = 1f / 60f;
@@ -66,28 +65,29 @@ public class GamePlayController: IController
 
     private bool CheckStandingOnSurface()
     {
-        float catLeft = _cat.InitialPosition.X + 35;
-        float catTop = _cat.InitialPosition.Y + _cat.DeltaY;
-        float catRight = catLeft + _cat.WidthTexture - 75;
-        float catBottom = catTop + _cat.HeightTexture;
+        var catLeft = _cat.InitialPosition.X + 35;
+        var catTop = _cat.InitialPosition.Y + _cat.DeltaY;
+        var catRight = catLeft + _cat.WidthTexture - 75;
+        var catBottom = catTop + _cat.HeightTexture;
 
         foreach (var e in _game.Entities)
         {
             if (e.IsSurface)
             {
-                float surfLeft = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
-                float surfTop = e.PositionGround;
-                float surfRight = surfLeft + e.WidthTexture;
-                float surfBottom = surfTop + e.HeightTexture;
+                var surfLeft = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
+                var surfTop = e.PositionGround;
+                var surfRight = surfLeft + e.WidthTexture;
+                var surfBottom = surfTop + e.HeightTexture;
 
                 if (catLeft <= surfRight && catRight >= surfLeft &&
                     catTop <= surfBottom && catBottom >= surfTop)
                     return true;
             }
         }
+
         return false;
     }
-    
+
     private void CatMoving(KeyboardState keyboard)
     {
         var velocity = _cat.VelocityX;
@@ -135,7 +135,8 @@ public class GamePlayController: IController
         foreach (var e in _game.Entities)
         {
             var entityScreenX = e.WorldPosition.X - newX * e.ParallaxFactor;
-            var entityRect = new Rectangle((int)entityScreenX, e.PositionGround, (int)e.WidthTexture, (int)e.HeightTexture);
+            var entityRect = new Rectangle((int)entityScreenX, e.PositionGround - e.HitBoxPoisitionY,
+                (int)e.WidthTexture, (int)e.HeightTexture + e.HitBoxPoisitionY);
             if (catRect.Intersects(entityRect))
             {
                 CheckKollision(e);

@@ -40,13 +40,13 @@ public class MenuView: IViewGame
 
     public void LoadContent()
     {
-        _calmButton = _content.Load<Texture2D>("CalmButton");
-        _hoveringButton = _content.Load<Texture2D>("HoveringMenuButton");
-        _clickedButton = _content.Load<Texture2D>("PressedMenuButton");
-        _background = _content.Load<Texture2D>("menu_background");
-        _cursorTexture = _content.Load<Texture2D>("Cursor");
-        _font = _content.Load<SpriteFont>("Font");
-        _menuSound = _content.Load<SoundEffect>("menu_Sound");
+        _calmButton = _content.Load<Texture2D>("buttoms/CalmButton");
+        _hoveringButton = _content.Load<Texture2D>("buttoms/HoveringMenuButton");
+        _clickedButton = _content.Load<Texture2D>("buttoms/PressedMenuButton");
+        _background = _content.Load<Texture2D>("background/menu_background");
+        _cursorTexture = _content.Load<Texture2D>("background/Cursor");
+        _font = _content.Load<SpriteFont>("background/Font");
+        _menuSound = _content.Load<SoundEffect>("buttoms/menu_Sound");
         _menuSoundInstance = _menuSound.CreateInstance();
         _menuSoundInstance.IsLooped = true;
     }

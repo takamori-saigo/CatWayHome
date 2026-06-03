@@ -42,6 +42,6 @@ public class DrawMap: IDrawElement
 
     public void LoadContent()
     {
-        _background = _content.Load<Texture2D>("new_background");
+        _background = _content.Load<Texture2D>("background/new_background");
     }
 }

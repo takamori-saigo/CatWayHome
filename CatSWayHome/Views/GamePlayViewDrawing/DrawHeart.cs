@@ -41,7 +41,7 @@ public class DrawHeart: IDrawElement
    
     public void LoadContent()
     {
-        _heart = _content.Load<Texture2D>("heart");
-        _emptyHeart =  _content.Load<Texture2D>("emptyHeart");
+        _heart = _content.Load<Texture2D>("Hearts/heart");
+        _emptyHeart =  _content.Load<Texture2D>("Hearts/emptyHeart");
     }
 }
