@@ -17,6 +17,7 @@ public class DrawEntities: IDrawElement
     private Texture2D _bench;
     private Texture2D _candei;
     private Texture2D _fish;
+    private Texture2D _luk;
     
     public DrawEntities(SpriteBatch spriteBatch, List<BaseEntity> entity,
         ContentManager content)
@@ -34,22 +35,25 @@ public class DrawEntities: IDrawElement
             {
                 case Rubbish:
                 {
-                    DrawCurrentEntity(e as Rubbish, 0.45f, _cucumber);
+                    DrawCurrentEntity(e as Rubbish, 0.45f, _rubbish);
                     break;
                 }
                 case Cucumber:
                     DrawCurrentEntity(e as Cucumber, 0.07f, _cucumber);
                     break;
                 case Bench:
-                    DrawCurrentEntity(e as Bench,  0.4f, _cucumber);
+                    DrawCurrentEntity(e as Bench,  0.4f, _bench);
                     break;
                 case Candei:
-                    DrawCurrentEntity(e as Candei,  0.4f, _cucumber);
+                    DrawCurrentEntity(e as Candei,  0.4f, _candei);
                     break;
                 case Fish:
                     var fish = e as Fish;
                     if (!fish.Take)
-                        DrawCurrentEntity(fish, 0.07f, _cucumber);
+                        DrawCurrentEntity(fish, 0.07f, _fish);
+                    break;
+                case Luk:
+                    DrawCurrentEntity(e as Luk, 0.4f, _luk);
                     break;
             }
         }
@@ -78,5 +82,6 @@ public class DrawEntities: IDrawElement
         _bench = _content.Load<Texture2D>("Entities/Bench");
         _candei = _content.Load<Texture2D>("Entities/condei");
         _fish = _content.Load<Texture2D>("Entities/fish");
+        _luk = _content.Load<Texture2D>("Entities/luk");
     }
 }
