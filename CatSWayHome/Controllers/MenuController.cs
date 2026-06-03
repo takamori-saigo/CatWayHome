@@ -18,11 +18,11 @@ public class MenuController: IController
     public void Update(GameTime gameTime)
     {
         var mouseState = Mouse.GetState();
-        isHovering(mouseState.Position);
-        isClicked(mouseState);
+        Hovering(mouseState.Position);
+        Clicked(mouseState);
     }
     
-    public void isHovering(Point positionOfCursor)
+    public void Hovering(Point positionOfCursor)
     {
         var buttonStart = _game.StartMenuButton;
         var buttonExit = _game.ExitMenuButton;
@@ -32,7 +32,7 @@ public class MenuController: IController
         buttonExit.IsHovered = rectangleButtonExit.Contains(positionOfCursor);
     }
 
-    public async void isClicked(MouseState state)
+    public async void Clicked(MouseState state)
     {
         var buttonStart = _game.StartMenuButton;
         var buttonExit = _game.ExitMenuButton;

@@ -12,16 +12,16 @@ public class ViewGame
     private SpriteBatch _spriteBatch;
     private MenuView _menuView;
     private GamePlayView _gamePlayView;
-    private ContentManager _contentManager;
+    
     public ViewGame(SpriteBatch spriteBatch, GameModel gameModel, ContentManager contentManager)
     {
         _spriteBatch = spriteBatch;
         _gameModel = gameModel;
-        _contentManager = contentManager;
-        _menuView = new MenuView(_spriteBatch, _gameModel,  _contentManager);
-        _gamePlayView = new GamePlayView(_spriteBatch, _gameModel, _contentManager);
+        _menuView = new MenuView(_spriteBatch, _gameModel,  contentManager);
+        _gamePlayView = new GamePlayView(_spriteBatch, _gameModel, contentManager);
         _currentView = _menuView;
     }
+    
     public void Draw()
     {
         if (_gameModel.State == GameState.Paused)
@@ -36,5 +36,12 @@ public class ViewGame
         }
         
         _currentView.Draw();
+    }
+
+    public void LoadContent()
+    {
+        _menuView.LoadContent();
+        _gamePlayView.LoadContent();
+
     }
 }

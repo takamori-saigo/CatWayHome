@@ -37,9 +37,11 @@ public class GameModel
     private void InitializeStaticEntities()
     {
         var positionsRubish = new[] { 0 };
-        var positionsCucumbers = new[] { 1200, 1700, 2200 };
+        var positionsCucumbers = new[] { 0 };
+        var positionsBenches = new[] { 1000 };
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
+        Entities.AddRange(positionsBenches.Select(x => new Bench(x)));
     }
     
     private void InitializeCoins()

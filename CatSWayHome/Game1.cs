@@ -41,6 +41,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _viewGame = new ViewGame(_spriteBatch, _gameModel, Content);
+        _viewGame.LoadContent();
     }
     
     protected override void Update(GameTime gameTime)

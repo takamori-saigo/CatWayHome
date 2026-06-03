@@ -38,7 +38,7 @@ public class MenuView: IViewGame
         InitializeButtons();
     }
 
-    private void LoadContent()
+    public void LoadContent()
     {
         _calmButton = _content.Load<Texture2D>("CalmButton");
         _hoveringButton = _content.Load<Texture2D>("HoveringMenuButton");

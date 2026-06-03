@@ -10,6 +10,7 @@ public abstract class BaseEntity
     public float ParallaxFactor { get; set; } = 1.8f;
     public  float WidthTexture { get; set; }
     public  float HeightTexture { get; set; }
+    public virtual bool IsSurface => false;
     public void Update(int deltaX)
     {
         Position = new Vector2(WorldPosition.X - deltaX * ParallaxFactor, PositionGround);

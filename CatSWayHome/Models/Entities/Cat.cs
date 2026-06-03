@@ -19,7 +19,7 @@ public class Cat
     
     public int Health { get; set; }
     
-    public Vector2 InitialPosition { get; private set; } 
+    public Vector2 InitialPosition { get; set; } 
     public int DeltaX { get; set; }
     public int VelocityX { get; set; }
 
@@ -31,6 +31,9 @@ public class Cat
     public bool IsMoving { get; set; }
     public bool IsGoingBack { get; set; }
     public bool IsKnockback { get; set; }
+    public bool CatWasMoving { get; set; }
+    public bool CatWasJumping { get; set; }
+    public bool OnTheObject { get; set; }
     /*
     public int Score { get; private set; }
     */
