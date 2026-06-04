@@ -1,4 +1,5 @@
-﻿using CatSWayHome.Models;
+﻿using System.Linq;
+using CatSWayHome.Models;
 using Microsoft.Xna.Framework;
 
 namespace CatSWayHome.Controllers;
@@ -47,6 +48,16 @@ public class GameController
         _cat.IsKnockback = false;
         _gameModel.StartMenuButton.IsFirstClick = true;
         _gameModel.StartMenuButton.Text = "НАЧАТЬ ЗАНОВО";
+        foreach (var e in _gameModel.Entities)
+        {
+            e.HasTriggeredDialog = false;
+            if (e is Dog dog)
+            {
+                dog.DogWorldX = 4500;
+                dog.IsChasing = false;
+                dog.WorldPosition = new Vector2(dog.DogWorldX, dog.PositionGround);
+            }
+        }
         _gameModel.State = GameState.Paused;
     }
 }

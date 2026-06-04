@@ -8,9 +8,6 @@ public class Cat
     {
         Health = 4;
         VelocityX = 2;
-        /*
-        Score = 0;
-        */
         InitialPosition = new Vector2(650, 680);
     }
 

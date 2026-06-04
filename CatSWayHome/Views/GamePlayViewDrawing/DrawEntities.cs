@@ -22,6 +22,8 @@ public class DrawEntities: IDrawElement
     private Texture2D _exitDoor;
     private Texture2D _dog;
     private Animation _dogAnimation;
+    private Texture2D _car;
+    private Texture2D _barrel;
     public DrawEntities(SpriteBatch spriteBatch, List<BaseEntity> entity,
         ContentManager content)
     {
@@ -67,6 +69,12 @@ public class DrawEntities: IDrawElement
                 case Dog:
                     DrawDog(e as Dog);
                     break;
+                case Car:
+                    DrawCurrentEntity(e as Car, 0.5f, _car);
+                    break;
+                case Barrel:
+                    DrawCurrentEntity(e as Barrel, 0.4f, _barrel);
+                    break;
             }
         }
         
@@ -74,7 +82,7 @@ public class DrawEntities: IDrawElement
 
     private void DrawDog(Dog dog)
     {
-        var scale = 0.3f;
+        var scale = 1f;
         if (dog.HeightTexture == 0)
         {
             dog.HeightTexture = _dogAnimation._height * scale;
@@ -118,6 +126,8 @@ public class DrawEntities: IDrawElement
         _skotch = _content.Load<Texture2D>("Entities/skotch");
         _exitDoor = _content.Load<Texture2D>("Entities/door");
         _dog = _content.Load<Texture2D>("Entities/dog");
-        _dogAnimation = new Animation(0, 4, _dog.Width / 4, _dog.Height, 0.15, _dog);
+        _car = _content.Load<Texture2D>("Entities/car");
+        _barrel = _content.Load<Texture2D>("Entities/box");
+        _dogAnimation = new Animation(0, 4, _dog.Width / 4, _dog.Height, 0.4, _dog);
     }
 }

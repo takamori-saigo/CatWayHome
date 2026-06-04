@@ -110,7 +110,7 @@ public class MenuView: IViewGame
     
     public void DrawButtonText(MenuButton menuButton, string textWhenClicled)
     {
-        var text = menuButton.IsFirstClick ? menuButton.Text : textWhenClicled;
+        var text = menuButton.Text;
         var textSize = _font.MeasureString(text);
     
         var padding = 20f;

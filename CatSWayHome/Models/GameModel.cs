@@ -37,16 +37,16 @@ public class GameModel
 
     private void InitializeStaticEntities()
     {
-        var positionsRubish = new[] { - 900};
-        var positionsCucumbers = new[] { - 900};
-        var positionsBenches = new[] { -900 };
-        var positionsOfCondei = new[] { -900 };
-        var positionsOfFishes = new[] { - 900 };
-        var positionsOfLuk = new[] { -900 };
-        var positionsSkotch = new[] { -900 };
-        var positionsDog = new[] { 2000 };
+        var positionsRubish = new[] { 3000}; 
+        var positionsCucumbers = new[] { 4200, 9200};
+        var positionsBenches = new[] { 5100 };
+        var positionsOfCondei = new[] { 1850, 9000 };
+        var positionsOfFishes = new[] { 3700, 4800, 6000 };
+        var positionsOfLuk = new[] { 2000, 6850 };
+        var positionsSkotch = new[] { 5600 };
+        var positionsDog = new[] { 5600,  18500};
         var triggerDog = 300;
-        var positionExitDoor = 2000;
+        var positionExitDoor = 11500;
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
         Entities.AddRange(positionsBenches.Select(x => new Bench(x)));
@@ -54,7 +54,9 @@ public class GameModel
         Entities.AddRange(positionsOfFishes.Select(x => new Fish(x)));
         Entities.AddRange(positionsOfLuk.Select(x => new Luk(x)));
         Entities.AddRange(positionsSkotch.Select(x => new Skotch(x)));
+        Entities.Add(new Car(10000));
         Entities.AddRange(positionsDog.Select(x => new Dog(x, triggerDog)));
+        Entities.Add(new Barrel(6720));
         Entities.Add(new ExitDoor(positionExitDoor));
     }
     

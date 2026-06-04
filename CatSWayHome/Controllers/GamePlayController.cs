@@ -24,7 +24,11 @@ public class GamePlayController: IController
         if (_cat.Health == 0) _game.State = GameState.Lost;
         var keyBoard = Keyboard.GetState();
         var elapsed = 1f / 60f;
-        if (keyBoard.IsKeyDown(Keys.Escape)) _game.State = GameState.Paused;
+        if (keyBoard.IsKeyDown(Keys.Escape))
+        {
+            _game.StartMenuButton.Text = "ПРОДОЛЖИТЬ";
+            _game.State = GameState.Paused;
+        }
 
         if (_cat.IsFirstLaunch && _cat.IsMoving)
         {
@@ -70,6 +74,7 @@ public class GamePlayController: IController
                 _game.State = GameState.Won;
         }
         UpdateDog();
+        CheckDogCollision();
         CatMoving(keyBoard);
         ApplyPhysics(elapsed);
         _previousKeyboardState = keyBoard;
@@ -97,17 +102,45 @@ public class GamePlayController: IController
         }
     }
 
+    private void CheckDogCollision()
+    {
+        var catRect = new Rectangle((int)_cat.InitialPosition.X + 35, (int)(_cat.InitialPosition.Y + _cat.DeltaY),
+            (int)_cat.WidthTexture - 75, (int)_cat.HeightTexture);
+
+        foreach (var e in _game.Entities.OfType<Dog>())
+        {
+            var dogScreenX = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
+            var dogRect = new Rectangle((int)dogScreenX, e.PositionGround - e.HitBoxPoisitionY,
+                (int)e.WidthTexture, (int)e.HeightTexture + e.HitBoxPoisitionY);
+
+            if (catRect.Intersects(dogRect))
+            {
+                if (IsCatNearRubbish()) return;
+                if (_cat.InvulnerabilityTimer <= 0)
+                {
+                    _cat.Health--;
+                    _cat.InvulnerabilityTimer = 1.5f;
+                }
+                _cat.VelocityY = Cat.JumpVelocity;
+                _cat.IsJump = true;
+                _cat.IsKnockback = true;
+            }
+        }
+    }
+
     private bool IsCatNearRubbish()
     {
-        var catWorldX = _cat.InitialPosition.X + _cat.DeltaX;
+        var catLeft = _cat.InitialPosition.X + 35;
+        var catRight = catLeft + _cat.WidthTexture - 75;
         foreach (var e in _game.Entities)
         {
-            if (e is Rubbish rubbish)
+            if (e is Rubbish || e is Car)
             {
-                var width = rubbish.WidthTexture > 0 ? rubbish.WidthTexture : 100;
-                var left = rubbish.WorldPosition.X;
-                var right = rubbish.WorldPosition.X + width;
-                if (catWorldX >= left && catWorldX <= right)
+                var entityScreenX = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
+                var width = e.WidthTexture > 0 ? e.WidthTexture : 200;
+                var left = entityScreenX;
+                var right = entityScreenX + width;
+                if (catLeft < right && catRight > left)
                     return true;
             }
         }
@@ -256,6 +289,7 @@ public class GamePlayController: IController
             if (catRect.Intersects(entityRect))
             {
                 CheckKollision(e);
+                if (e is Rubbish || e is Car) continue;
                 return true;
             }
         }
@@ -313,8 +347,11 @@ public class GamePlayController: IController
                 break;
         }
         
-        if (entity.IsSurface && entity.PositionGround >= _cat.InitialPosition.Y + _cat.DeltaY)
+        if (entity.IsSurface &&
+            entity.PositionGround >= _cat.InitialPosition.Y + _cat.DeltaY &&
+            _cat.InitialPosition.Y + _cat.DeltaY + _cat.HeightTexture <= entity.PositionGround + 20)
         {
+            _cat.IsKnockback = false;
             if (_cat.VelocityY < 0) 
             {
                 _cat.VelocityY = 0;

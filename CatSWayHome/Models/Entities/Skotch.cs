@@ -4,7 +4,7 @@ namespace CatSWayHome.Models;
 
 public class Skotch: BaseEntity
 {
-    public override int PositionGround { get; set; } = 680;
+    public override int PositionGround { get; set; } = 790;
     
     public Skotch(int x)
     {

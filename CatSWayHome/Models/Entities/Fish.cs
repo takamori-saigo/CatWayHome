@@ -4,7 +4,7 @@ namespace CatSWayHome.Models;
 
 public class Fish: BaseEntity
 {
-    public override int PositionGround { get; set; } = 790;
+    public override int PositionGround { get; set; } = 600;
 
     public bool Take { get; set; }
     public Fish(int x)
