@@ -8,6 +8,7 @@ public class GameController
     private GameModel _gameModel;
     private MenuController _menuController;
     private GamePlayController _gamePlayController;
+    private WinController _winController;
     private IController _currentController;
     
     public GameController(GameModel model)
@@ -15,6 +16,7 @@ public class GameController
         _gameModel = model;
         _menuController = new MenuController(_gameModel);
         _gamePlayController = new GamePlayController(_gameModel);
+        _winController = new WinController(_gameModel);
         _currentController = _menuController;
     }
     
@@ -27,6 +29,8 @@ public class GameController
             _currentController = _gamePlayController;
         if (_gameModel.State == GameState.Lost)
             ResetGame();
+        if (_gameModel.State == GameState.Won)
+            _currentController = _winController;
         _currentController.Update(gameTime);
     }
 

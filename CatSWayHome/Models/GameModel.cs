@@ -9,6 +9,7 @@ namespace CatSWayHome.Models;
 public class GameModel
 {
     public GameState State { get; set; }
+    public float WinAlpha { get; set; }
     public Cat Kitty { get; private set; }
     public MenuButton StartMenuButton { get; private set; }
     public MenuButton ExitMenuButton { get; private set; }
@@ -16,7 +17,7 @@ public class GameModel
     
     public GameModel()
     {
-        State = GameState.Paused;
+        State = GameState.Playing;
         InitializeEntities();
     }
 
@@ -43,6 +44,9 @@ public class GameModel
         var positionsOfFishes = new[] { - 900 };
         var positionsOfLuk = new[] { -900 };
         var positionsSkotch = new[] { -900 };
+        var positionsDog = new[] { 2000 };
+        var triggerDog = 300;
+        var positionExitDoor = 2000;
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
         Entities.AddRange(positionsBenches.Select(x => new Bench(x)));
@@ -50,6 +54,8 @@ public class GameModel
         Entities.AddRange(positionsOfFishes.Select(x => new Fish(x)));
         Entities.AddRange(positionsOfLuk.Select(x => new Luk(x)));
         Entities.AddRange(positionsSkotch.Select(x => new Skotch(x)));
+        Entities.AddRange(positionsDog.Select(x => new Dog(x, triggerDog)));
+        Entities.Add(new ExitDoor(positionExitDoor));
     }
     
     private void InitializeCoins()

@@ -12,6 +12,7 @@ public class ViewGame
     private SpriteBatch _spriteBatch;
     private MenuView _menuView;
     private GamePlayView _gamePlayView;
+    private WinView _winView;
     private Texture2D _pixelTexture;
     private float _transitionAlpha;
     private GameState _previousState;
@@ -22,6 +23,7 @@ public class ViewGame
         _gameModel = gameModel;
         _menuView = new MenuView(_spriteBatch, _gameModel,  contentManager);
         _gamePlayView = new GamePlayView(_spriteBatch, _gameModel, contentManager);
+        _winView = new WinView(_spriteBatch, _gameModel, contentManager);
         _currentView = _menuView;
     }
 
@@ -50,6 +52,11 @@ public class ViewGame
         {
             _currentView = _gamePlayView;
             _menuView.StopMusic();
+        }
+
+        if (_gameModel.State == GameState.Won)
+        {
+            _currentView = _winView;
         }
         
         _currentView.Draw();

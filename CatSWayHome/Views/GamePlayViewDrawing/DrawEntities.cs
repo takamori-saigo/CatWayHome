@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CatSWayHome.Models;
+using CatSWayHome.View.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +19,9 @@ public class DrawEntities: IDrawElement
     private Texture2D _fish;
     private Texture2D _luk;
     private Texture2D _skotch;
+    private Texture2D _exitDoor;
+    private Texture2D _dog;
+    private Animation _dogAnimation;
     public DrawEntities(SpriteBatch spriteBatch, List<BaseEntity> entity,
         ContentManager content)
     {
@@ -58,9 +61,35 @@ public class DrawEntities: IDrawElement
                 case Skotch:
                     DrawCurrentEntity(e as Skotch, 0.25f, _skotch);
                     break;
+                case ExitDoor:
+                    DrawCurrentEntity(e as ExitDoor, 0.5f, _exitDoor);
+                    break;
+                case Dog:
+                    DrawDog(e as Dog);
+                    break;
             }
         }
         
+    }
+
+    private void DrawDog(Dog dog)
+    {
+        var scale = 0.3f;
+        if (dog.HeightTexture == 0)
+        {
+            dog.HeightTexture = _dogAnimation._height * scale;
+            dog.WidthTexture = _dogAnimation._width * scale;
+        }
+
+        _dogAnimation.Update();
+        var frameX = (_dogAnimation._currentFrame % _dogAnimation._column) * _dogAnimation._width;
+        var sourceRect = new Rectangle(frameX, 0, _dogAnimation._width, _dogAnimation._height);
+        var effect = dog.Direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        _spriteBatch.Draw(_dog, new Vector2(dog.Position.X, dog.PositionGround),
+            sourceRect, Color.White, 0f, Vector2.Zero, scale, effect, 0f);
+
+        DebugClassHitbox.DrawHitBox(new Vector2(dog.Position.X, dog.PositionGround),
+            _spriteBatch, (int)dog.WidthTexture, (int)dog.HeightTexture);
     }
 
     private void DrawCurrentEntity(BaseEntity entity, float scale, Texture2D texture)
@@ -87,5 +116,8 @@ public class DrawEntities: IDrawElement
         _fish = _content.Load<Texture2D>("Entities/fish");
         _luk = _content.Load<Texture2D>("Entities/luk");
         _skotch = _content.Load<Texture2D>("Entities/skotch");
+        _exitDoor = _content.Load<Texture2D>("Entities/door");
+        _dog = _content.Load<Texture2D>("Entities/dog");
+        _dogAnimation = new Animation(0, 4, _dog.Width / 4, _dog.Height, 0.15, _dog);
     }
 }

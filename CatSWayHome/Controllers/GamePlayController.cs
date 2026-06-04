@@ -63,6 +63,13 @@ public class GamePlayController: IController
             _cat.JumpCooldown -= elapsed;
         if (_cat.InvulnerabilityTimer > 0)
             _cat.InvulnerabilityTimer -= elapsed;
+        if (_cat.ExitDoorTimer > 0)
+        {
+            _cat.ExitDoorTimer -= elapsed;
+            if (_cat.ExitDoorTimer <= 0)
+                _game.State = GameState.Won;
+        }
+        UpdateDog();
         CatMoving(keyBoard);
         ApplyPhysics(elapsed);
         _previousKeyboardState = keyBoard;
@@ -76,6 +83,37 @@ public class GamePlayController: IController
         }
     }
     
+    private void UpdateDog()
+    {
+        foreach (var e in _game.Entities.OfType<Dog>())
+        {
+            if (!e.IsChasing && _cat.DeltaX >= e.TriggerDeltaX)
+                e.IsChasing = true;
+
+            if (!e.IsChasing) continue;
+
+            e.DogWorldX -= (int)e.Speed;
+            e.WorldPosition = new Vector2(e.DogWorldX, e.PositionGround);
+        }
+    }
+
+    private bool IsCatNearRubbish()
+    {
+        var catWorldX = _cat.InitialPosition.X + _cat.DeltaX;
+        foreach (var e in _game.Entities)
+        {
+            if (e is Rubbish rubbish)
+            {
+                var width = rubbish.WidthTexture > 0 ? rubbish.WidthTexture : 100;
+                var left = rubbish.WorldPosition.X;
+                var right = rubbish.WorldPosition.X + width;
+                if (catWorldX >= left && catWorldX <= right)
+                    return true;
+            }
+        }
+        return false;
+    }
+
     private void ApplyPhysics(float elapsed)
     {
         if (_cat.IsJump)  
@@ -250,12 +288,28 @@ public class GamePlayController: IController
                 _cat.IsJump = true;
                 _cat.IsKnockback = true;
                 break;
+            case Dog:
+                if (IsCatNearRubbish())
+                    break;
+                if (_cat.InvulnerabilityTimer <= 0)
+                {
+                    _cat.Health--;
+                    _cat.InvulnerabilityTimer = 1.5f;
+                }
+                _cat.VelocityY = Cat.JumpVelocity;
+                _cat.IsJump = true;
+                _cat.IsKnockback = true;
+                break;
             case Fish :
                 var fish = entity as Fish;
                 if (_cat.Health < 4)
                     _cat.Health++;
                 fish.Take = true;
                 _game.Entities.Remove(fish);
+                break;
+            case ExitDoor:
+                if (_cat.ExitDoorTimer <= 0)
+                    _cat.ExitDoorTimer = 1f;
                 break;
         }
         

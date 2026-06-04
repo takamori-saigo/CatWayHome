@@ -44,6 +44,7 @@ public class Cat
     public float DialogCharTimer { get; set; }
     public float JumpCooldown { get; set; }
     public float InvulnerabilityTimer { get; set; }
+    public float ExitDoorTimer { get; set; } = -1f;
     /*
     public int Score { get; private set; }
     */
