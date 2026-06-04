@@ -4,7 +4,7 @@ namespace CatSWayHome.Models;
 
 public class Luk: BaseEntity
 {
-    public override int PositionGround { get; set; } = 795;
+    public override int PositionGround { get; set; } = 810;
 
     public Luk(int x)
     {

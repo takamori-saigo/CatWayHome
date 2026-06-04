@@ -225,6 +225,12 @@ public class GamePlayController: IController
                 _cat.IsJump = true;
                 _cat.IsKnockback = true;
                 break;
+            case Luk :
+                _cat.Health--;
+                _cat.VelocityY = Cat.JumpVelocity;
+                _cat.IsJump = true;
+                _cat.IsKnockback = true;
+                break;
             case Fish :
                 var fish = entity as Fish;
                 if (_cat.Health < 4)
@@ -233,8 +239,6 @@ public class GamePlayController: IController
                 _game.Entities.Remove(fish);
                 break;
         }
-
-        
         
         if (entity.IsSurface && entity.PositionGround >= _cat.InitialPosition.Y + _cat.DeltaY)
         {

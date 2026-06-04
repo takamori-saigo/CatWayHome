@@ -45,7 +45,7 @@ public class DrawEntities: IDrawElement
                     DrawCurrentEntity(e as Bench,  0.4f, _bench);
                     break;
                 case Candei:
-                    DrawCurrentEntity(e as Candei,  0.4f, _candei);
+                    DrawCurrentEntity(e as Candei,  0.15f, _candei);
                     break;
                 case Fish:
                     var fish = e as Fish;
@@ -53,7 +53,7 @@ public class DrawEntities: IDrawElement
                         DrawCurrentEntity(fish, 0.07f, _fish);
                     break;
                 case Luk:
-                    DrawCurrentEntity(e as Luk, 0.4f, _luk);
+                    DrawCurrentEntity(e as Luk, 0.25f, _luk);
                     break;
             }
         }
@@ -80,7 +80,7 @@ public class DrawEntities: IDrawElement
         _rubbish = _content.Load<Texture2D>("Entities/rubish");
         _cucumber = _content.Load<Texture2D>("Entities/Cucomber");
         _bench = _content.Load<Texture2D>("Entities/Bench");
-        _candei = _content.Load<Texture2D>("Entities/condei");
+        _candei = _content.Load<Texture2D>("Entities/conditioner");
         _fish = _content.Load<Texture2D>("Entities/fish");
         _luk = _content.Load<Texture2D>("Entities/luk");
     }

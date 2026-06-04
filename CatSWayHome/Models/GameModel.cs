@@ -39,9 +39,9 @@ public class GameModel
         var positionsRubish = new[] { - 900};
         var positionsCucumbers = new[] { - 900};
         var positionsBenches = new[] { -900 };
-        var positionsOfCondei = new[] { -900 };
+        var positionsOfCondei = new[] { 1850 };
         var positionsOfFishes = new[] { - 900 };
-        var positionsOfLuk = new[] { - 900 };
+        var positionsOfLuk = new[] { 2000 };
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
         Entities.AddRange(positionsBenches.Select(x => new Bench(x)));
