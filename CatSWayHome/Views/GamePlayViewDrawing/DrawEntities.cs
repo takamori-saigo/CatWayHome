@@ -18,7 +18,7 @@ public class DrawEntities: IDrawElement
     private Texture2D _candei;
     private Texture2D _fish;
     private Texture2D _luk;
-    
+    private Texture2D _skotch;
     public DrawEntities(SpriteBatch spriteBatch, List<BaseEntity> entity,
         ContentManager content)
     {
@@ -55,6 +55,9 @@ public class DrawEntities: IDrawElement
                 case Luk:
                     DrawCurrentEntity(e as Luk, 0.25f, _luk);
                     break;
+                case Skotch:
+                    DrawCurrentEntity(e as Skotch, 0.25f, _skotch);
+                    break;
             }
         }
         
@@ -83,5 +86,6 @@ public class DrawEntities: IDrawElement
         _candei = _content.Load<Texture2D>("Entities/conditioner");
         _fish = _content.Load<Texture2D>("Entities/fish");
         _luk = _content.Load<Texture2D>("Entities/luk");
+        _skotch = _content.Load<Texture2D>("Entities/skotch");
     }
 }

@@ -229,6 +229,7 @@ public class GamePlayController: IController
     {
         switch (entity)
         {
+            case Skotch:
             case Cucumber :
                 if (_cat.InvulnerabilityTimer <= 0)
                 {

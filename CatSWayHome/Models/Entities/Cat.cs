@@ -6,7 +6,7 @@ public class Cat
 {
     public Cat()
     {
-        Health = 1;
+        Health = 4;
         VelocityX = 2;
         /*
         Score = 0;

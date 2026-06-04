@@ -39,15 +39,17 @@ public class GameModel
         var positionsRubish = new[] { - 900};
         var positionsCucumbers = new[] { - 900};
         var positionsBenches = new[] { -900 };
-        var positionsOfCondei = new[] { 1850 };
+        var positionsOfCondei = new[] { -900 };
         var positionsOfFishes = new[] { - 900 };
-        var positionsOfLuk = new[] { 2000 };
+        var positionsOfLuk = new[] { -900 };
+        var positionsSkotch = new[] { -900 };
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
         Entities.AddRange(positionsBenches.Select(x => new Bench(x)));
         Entities.AddRange(positionsOfCondei.Select(x => new Candei(x)));
         Entities.AddRange(positionsOfFishes.Select(x => new Fish(x)));
         Entities.AddRange(positionsOfLuk.Select(x => new Luk(x)));
+        Entities.AddRange(positionsSkotch.Select(x => new Skotch(x)));
     }
     
     private void InitializeCoins()
