@@ -5,4 +5,6 @@ public enum GameState
     Paused,
     Playing,
     Exit,
+    Won,
+    Lost
 }

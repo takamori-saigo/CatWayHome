@@ -21,7 +21,7 @@ public class GamePlayController: IController
 
     public void Update(GameTime gameTime)
     {
-        if (_cat.Health == 0) _game.State = GameState.Paused;
+        if (_cat.Health == 0) _game.State = GameState.Lost;
         var keyBoard = Keyboard.GetState();
         var elapsed = 1f / 60f;
         if (keyBoard.IsKeyDown(Keys.Escape)) _game.State = GameState.Paused;
@@ -260,12 +260,12 @@ public class GamePlayController: IController
         
         if (entity.IsSurface && entity.PositionGround >= _cat.InitialPosition.Y + _cat.DeltaY)
         {
-            if (_cat.VelocityY < 0) // hitting from below → bonk
+            if (_cat.VelocityY < 0) 
             {
                 _cat.VelocityY = 0;
                 _cat.DeltaY = entity.PositionGround - _cat.InitialPosition.Y + 1;
             }
-            else // falling onto surface → land
+            else
             {
                 _cat.DeltaY = entity.PositionGround - _cat.InitialPosition.Y - _cat.HeightTexture;
                 _cat.VelocityY = 0;
