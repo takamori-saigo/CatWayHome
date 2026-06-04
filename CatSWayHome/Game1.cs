@@ -47,6 +47,7 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         _gameController.Update(gameTime);
+        _viewGame.Update(gameTime);
         if (_gameModel.State == GameState.Exit) Exit();
         base.Update(gameTime);
     }

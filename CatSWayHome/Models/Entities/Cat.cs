@@ -6,7 +6,7 @@ public class Cat
 {
     public Cat()
     {
-        Health = 4;
+        Health = 7;
         VelocityX = 2;
         /*
         Score = 0;
@@ -34,8 +34,7 @@ public class Cat
     public bool CatWasMoving { get; set; }
     public bool CatWasJumping { get; set; }
     public bool OnTheObject { get; set; }
-
-    public bool isFirstStart { get; set; }
+    
     
     public bool ShowDialog { get; set; }
     public float DialogTimeLeft { get; set; }
@@ -43,6 +42,8 @@ public class Cat
     public bool IsFirstLaunch { get; set; } = true;
     public int DialogCharIndex { get; set; }
     public float DialogCharTimer { get; set; }
+    public float JumpCooldown { get; set; }
+    public float InvulnerabilityTimer { get; set; }
     /*
     public int Score { get; private set; }
     */

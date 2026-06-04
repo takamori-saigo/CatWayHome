@@ -12,6 +12,7 @@ public class GamePlayController: IController
 {
     private GameModel _game;
     private Cat _cat;
+    private KeyboardState _previousKeyboardState;
     public GamePlayController(GameModel gameModel)
     {
         _game = gameModel;
@@ -25,10 +26,11 @@ public class GamePlayController: IController
         var elapsed = 1f / 60f;
         if (keyBoard.IsKeyDown(Keys.Escape)) _game.State = GameState.Paused;
 
-        if (_cat.IsFirstLaunch)
+        if (_cat.IsFirstLaunch && _cat.IsMoving)
         {
-            _cat.DialogText = "Welcome to the game!";
+            _cat.DialogText = "Эх... меня наверное уже потеряла хозяйка..Нужно возвращаться домой";
             _cat.ShowDialog = true;
+            _cat.DialogTimeLeft = 2f;
             _cat.DialogCharIndex = 0;
             _cat.DialogCharTimer = 0;
             _cat.IsFirstLaunch = false;
@@ -39,7 +41,7 @@ public class GamePlayController: IController
             if (_cat.DialogCharIndex < _cat.DialogText.Length)
             {
                 _cat.DialogCharTimer += elapsed;
-                if (_cat.DialogCharTimer >= 0.15f)
+                if (_cat.DialogCharTimer >= 0.12f)
                 {
                     _cat.DialogCharIndex++;
                     _cat.DialogCharTimer = 0;
@@ -57,8 +59,13 @@ public class GamePlayController: IController
             CheckEntityProximity();
         }
 
+        if (_cat.JumpCooldown > 0)
+            _cat.JumpCooldown -= elapsed;
+        if (_cat.InvulnerabilityTimer > 0)
+            _cat.InvulnerabilityTimer -= elapsed;
         CatMoving(keyBoard);
         ApplyPhysics(elapsed);
+        _previousKeyboardState = keyBoard;
     }
 
     private void UpdateCoordsEntities()
@@ -101,7 +108,7 @@ public class GamePlayController: IController
     {
         _cat.DialogText = message;
         _cat.ShowDialog = true;
-        _cat.DialogTimeLeft = 5f;
+        _cat.DialogTimeLeft = 2f;
         _cat.DialogCharIndex = 0;
         _cat.DialogCharTimer = 0;
     }
@@ -165,7 +172,10 @@ public class GamePlayController: IController
         _cat.CatWasJumping = _cat.IsJump;
         if (_cat.IsJump)
             CheckHitBoxes(_cat.DeltaX);
-        if ((keyboard.IsKeyDown(Keys.Space) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.W)) && !_cat.IsJump)
+        var jumpJustPressed = (keyboard.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space)) ||
+                              (keyboard.IsKeyDown(Keys.Up) && !_previousKeyboardState.IsKeyDown(Keys.Up)) ||
+                              (keyboard.IsKeyDown(Keys.W) && !_previousKeyboardState.IsKeyDown(Keys.W));
+        if (jumpJustPressed && !_cat.IsJump && _cat.JumpCooldown <= 0)
         {
             _cat.VelocityY = Cat.JumpVelocity;
             _cat.IsJump = true;
@@ -220,13 +230,21 @@ public class GamePlayController: IController
         switch (entity)
         {
             case Cucumber :
-                _cat.Health--;
+                if (_cat.InvulnerabilityTimer <= 0)
+                {
+                    _cat.Health--;
+                    _cat.InvulnerabilityTimer = 1.5f;
+                }
                 _cat.VelocityY = Cat.JumpVelocity;
                 _cat.IsJump = true;
                 _cat.IsKnockback = true;
                 break;
             case Luk :
-                _cat.Health--;
+                if (_cat.InvulnerabilityTimer <= 0)
+                {
+                    _cat.Health--;
+                    _cat.InvulnerabilityTimer = 1.5f;
+                }
                 _cat.VelocityY = Cat.JumpVelocity;
                 _cat.IsJump = true;
                 _cat.IsKnockback = true;
@@ -242,10 +260,19 @@ public class GamePlayController: IController
         
         if (entity.IsSurface && entity.PositionGround >= _cat.InitialPosition.Y + _cat.DeltaY)
         {
-            _cat.DeltaY = entity.PositionGround - _cat.InitialPosition.Y - _cat.HeightTexture;
-            _cat.VelocityY = 0;
-            _cat.IsJump = false;
-            _cat.OnTheObject = true;
+            if (_cat.VelocityY < 0) // hitting from below → bonk
+            {
+                _cat.VelocityY = 0;
+                _cat.DeltaY = entity.PositionGround - _cat.InitialPosition.Y + 1;
+            }
+            else // falling onto surface → land
+            {
+                _cat.DeltaY = entity.PositionGround - _cat.InitialPosition.Y - _cat.HeightTexture;
+                _cat.VelocityY = 0;
+                _cat.IsJump = false;
+                _cat.OnTheObject = true;
+                _cat.JumpCooldown = 0.15f;
+            }
         }
 
         if (entity.DialogMessage != null && !entity.HasTriggeredDialog && !_cat.ShowDialog)

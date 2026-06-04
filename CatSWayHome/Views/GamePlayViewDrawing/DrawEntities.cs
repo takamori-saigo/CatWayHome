@@ -69,8 +69,8 @@ public class DrawEntities: IDrawElement
             entity.WidthTexture = texture.Width * scale;
         }
 
-        /*DebugClassHitbox.DrawHitBox(entity.Position, _spriteBatch, (int)entity.WidthTexture,
-            (int)entity.HeightTexture);*/
+        DebugClassHitbox.DrawHitBox(entity.Position, _spriteBatch, (int)entity.WidthTexture,
+            (int)entity.HeightTexture);
         _spriteBatch.Draw(texture, entity.Position, null, Color.White, 0f, Vector2.Zero, scale,
             SpriteEffects.None, 0f);
     }

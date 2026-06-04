@@ -102,9 +102,9 @@ public class DrawCat: IDrawElement
 
     private void DrawDialogWindow()
     {
-        var scaleWindow = 0.15f;
+        var scaleWindow = 0.20f;
         var text = _cat.DialogText.Substring(0, _cat.DialogCharIndex);
-        var position = new Vector2(_cat.InitialPosition.X + _cat.WidthTexture + (_cat.IsGoingBack ? - _cat.WidthTexture - 180 : 0), _cat.InitialPosition.Y - 60 + _cat.DeltaY);
+        var position = new Vector2(_cat.InitialPosition.X + _cat.WidthTexture + (_cat.IsGoingBack ? - _cat.WidthTexture - 230 : -30), _cat.InitialPosition.Y - 95 + _cat.DeltaY);
         _spriteBatch.Draw(_dialogWindow, position, null, Color.White, 
             0f, Vector2.Zero, scaleWindow, _cat.IsGoingBack ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         

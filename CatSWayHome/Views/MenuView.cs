@@ -54,13 +54,13 @@ public class MenuView: IViewGame
     public void InitializeButtons()
     {
         var startButton = _gameModel.StartMenuButton;
-        startButton.Text = "START";
+        startButton.Text = "НАЧАТЬ";
         startButton.Position = new Point(_screenWidth / 2 - 200, _screenHeight / 2 - 60);
         startButton.Width = 400;
         startButton.Height = 120;
 
         var exitButton = _gameModel.ExitMenuButton;
-        exitButton.Text = "EXIT";
+        exitButton.Text = "ВЫХОД";
         exitButton.Position = new Point(_screenWidth / 2 - 200, _screenHeight / 2 - 60 + 150);
         exitButton.Width = 400;
         exitButton.Height = 120;
@@ -75,8 +75,8 @@ public class MenuView: IViewGame
         DrawButton(_gameModel.StartMenuButton);
         DrawButton(_gameModel.ExitMenuButton);
         
-        DrawButtonText(_gameModel.StartMenuButton, "CONTINUE");
-        DrawButtonText(_gameModel.ExitMenuButton, "EXIT");
+        DrawButtonText(_gameModel.StartMenuButton, "ПРОДОЛЖИТЬ");
+        DrawButtonText(_gameModel.ExitMenuButton, "ВЫХОД");
 
         DrawCursor();
     }
@@ -113,9 +113,11 @@ public class MenuView: IViewGame
         var text = menuButton.IsFirstClick ? menuButton.Text : textWhenClicled;
         var textSize = _font.MeasureString(text);
     
-        var scaleX = menuButton.Width / textSize.X;
-        var scaleY = menuButton.Height / textSize.Y;
-        var scale = Math.Min(scaleX, scaleY) - 0.3f; 
+        var padding = 20f;
+        var scale = Math.Min(
+            (menuButton.Height * 0.5f) / textSize.Y,
+            (menuButton.Width - padding * 2) / textSize.X
+        );
     
         var textPosition = new Vector2(
             menuButton.Position.X + (menuButton.Width - textSize.X * scale) / 2,

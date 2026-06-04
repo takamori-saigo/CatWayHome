@@ -11,6 +11,6 @@ public class Luk: BaseEntity
         WorldPosition = new Vector2(x, PositionGround);
     }
 
-    public override string DialogMessage => "Luk skywaker";
+    public override string DialogMessage => "В крайний раз, когда я провалился в эту неизвестную пещеру, было больно...";
     
 }

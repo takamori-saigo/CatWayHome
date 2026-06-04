@@ -16,7 +16,7 @@ public class GameModel
     
     public GameModel()
     {
-        State = GameState.Playing;
+        State = GameState.Paused;
         InitializeEntities();
     }
 
