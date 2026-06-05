@@ -10,5 +10,5 @@ public class Rubbish: BaseEntity
     }
 
     public override int PositionGround { get; set; } = 670;
-    public override string DialogMessage => "Trash is close";
+    public override string DialogMessage => "Кажется тут можно спрятаться";
 }

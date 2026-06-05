@@ -35,28 +35,15 @@ public class GamePlayController: IController
             _cat.DialogText = "Эх... меня наверное уже потеряла хозяйка..Нужно возвращаться домой";
             _cat.ShowDialog = true;
             _cat.DialogTimeLeft = 2f;
-            _cat.DialogCharIndex = 0;
-            _cat.DialogCharTimer = 0;
+            _cat.DialogCharIndex = _cat.DialogText.Length;
             _cat.IsFirstLaunch = false;
         }
 
         if (_cat.ShowDialog)
         {
-            if (_cat.DialogCharIndex < _cat.DialogText.Length)
-            {
-                _cat.DialogCharTimer += elapsed;
-                if (_cat.DialogCharTimer >= 0.12f)
-                {
-                    _cat.DialogCharIndex++;
-                    _cat.DialogCharTimer = 0;
-                }
-            }
-            else
-            {
-                _cat.DialogTimeLeft -= elapsed;
-                if (_cat.DialogTimeLeft <= 0)
-                    _cat.ShowDialog = false;
-            }
+            _cat.DialogTimeLeft -= elapsed;
+            if (_cat.DialogTimeLeft <= 0)
+                _cat.ShowDialog = false;
         }
         else
         {
@@ -90,15 +77,32 @@ public class GamePlayController: IController
     
     private void UpdateDog()
     {
+        var catScreenX = _cat.InitialPosition.X;
         foreach (var e in _game.Entities.OfType<Dog>())
         {
-            if (!e.IsChasing && _cat.DeltaX >= e.TriggerDeltaX)
-                e.IsChasing = true;
+            if (e.HasRun) continue;
 
-            if (!e.IsChasing) continue;
+            if (!e.IsRunning)
+            {
+                var dogScreenX = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
+                var dx = (float)catScreenX - dogScreenX;
+                var distance = Math.Abs(dx);
 
-            e.DogWorldX -= (int)e.Speed;
-            e.WorldPosition = new Vector2(e.DogWorldX, e.PositionGround);
+                if (distance <= e.TriggerDistance)
+                {
+                    e.IsRunning = true;
+                    e.RunWorldPosX = e.WorldPosition.X;
+                    e.JustBarked = true;
+                }
+            }
+
+            if (e.IsRunning)
+            {
+                e.RunWorldPosX -= 4f;
+                e.WorldPosition = new Vector2(e.RunWorldPosX, e.PositionGround);
+                if (e.RunWorldPosX < _cat.DeltaX * e.ParallaxFactor - 200)
+                    e.HasRun = true;
+            }
         }
     }
 
@@ -109,6 +113,8 @@ public class GamePlayController: IController
 
         foreach (var e in _game.Entities.OfType<Dog>())
         {
+            if (e.HasRun || !e.IsRunning) continue;
+
             var dogScreenX = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
             var dogRect = new Rectangle((int)dogScreenX, e.PositionGround - e.HitBoxPoisitionY,
                 (int)e.WidthTexture, (int)e.HeightTexture + e.HitBoxPoisitionY);
@@ -119,6 +125,7 @@ public class GamePlayController: IController
                 if (_cat.InvulnerabilityTimer <= 0)
                 {
                     _cat.Health--;
+                    _cat.JustGotHit = true;
                     _cat.InvulnerabilityTimer = 1.5f;
                 }
                 _cat.VelocityY = Cat.JumpVelocity;
@@ -179,9 +186,8 @@ public class GamePlayController: IController
     {
         _cat.DialogText = message;
         _cat.ShowDialog = true;
-        _cat.DialogTimeLeft = 2f;
-        _cat.DialogCharIndex = 0;
-        _cat.DialogCharTimer = 0;
+        _cat.DialogTimeLeft = 4f;
+        _cat.DialogCharIndex = message.Length;
     }
 
     private void CheckEntityProximity()
@@ -191,7 +197,7 @@ public class GamePlayController: IController
 
         foreach (var e in _game.Entities)
         {
-            if (e.DialogMessage == null || e.HasTriggeredDialog)
+            if (e.DialogMessage == null || _cat.TriggeredDialogTypes.Contains(e.GetType().Name) || e is Fish)
                 continue;
 
             var entityScreenX = e.WorldPosition.X - _cat.DeltaX * e.ParallaxFactor;
@@ -202,7 +208,7 @@ public class GamePlayController: IController
 
             if (distance <= e.DialogTriggerDistance)
             {
-                e.HasTriggeredDialog = true;
+                _cat.TriggeredDialogTypes.Add(e.GetType().Name);
                 TriggerDialog(e.DialogMessage);
                 return;
             }
@@ -283,6 +289,8 @@ public class GamePlayController: IController
             (int)_cat.WidthTexture-75, (int)_cat.HeightTexture);
         foreach (var e in _game.Entities)
         {
+            if (e is Dog { HasRun: true }) continue;
+
             var entityScreenX = e.WorldPosition.X - newX * e.ParallaxFactor;
             var entityRect = new Rectangle((int)entityScreenX, e.PositionGround - e.HitBoxPoisitionY,
                 (int)e.WidthTexture, (int)e.HeightTexture + e.HitBoxPoisitionY);
@@ -306,6 +314,7 @@ public class GamePlayController: IController
                 if (_cat.InvulnerabilityTimer <= 0)
                 {
                     _cat.Health--;
+                    _cat.JustGotHit = true;
                     _cat.InvulnerabilityTimer = 1.5f;
                 }
                 _cat.VelocityY = Cat.JumpVelocity;
@@ -316,6 +325,7 @@ public class GamePlayController: IController
                 if (_cat.InvulnerabilityTimer <= 0)
                 {
                     _cat.Health--;
+                    _cat.JustGotHit = true;
                     _cat.InvulnerabilityTimer = 1.5f;
                 }
                 _cat.VelocityY = Cat.JumpVelocity;
@@ -328,6 +338,7 @@ public class GamePlayController: IController
                 if (_cat.InvulnerabilityTimer <= 0)
                 {
                     _cat.Health--;
+                    _cat.JustGotHit = true;
                     _cat.InvulnerabilityTimer = 1.5f;
                 }
                 _cat.VelocityY = Cat.JumpVelocity;
@@ -340,6 +351,8 @@ public class GamePlayController: IController
                     _cat.Health++;
                 fish.Take = true;
                 _game.Entities.Remove(fish);
+                _cat.TriggeredDialogTypes.Add(entity.GetType().Name);
+                TriggerDialog(entity.DialogMessage);
                 break;
             case ExitDoor:
                 if (_cat.ExitDoorTimer <= 0)
@@ -367,9 +380,9 @@ public class GamePlayController: IController
             }
         }
 
-        if (entity.DialogMessage != null && !entity.HasTriggeredDialog && !_cat.ShowDialog)
+        if (entity.DialogMessage != null && !_cat.TriggeredDialogTypes.Contains(entity.GetType().Name) && !_cat.ShowDialog)
         {
-            entity.HasTriggeredDialog = true;
+            _cat.TriggeredDialogTypes.Add(entity.GetType().Name);
             TriggerDialog(entity.DialogMessage);
         }
     } 

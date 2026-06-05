@@ -11,5 +11,5 @@ public class Skotch: BaseEntity
         WorldPosition = new Vector2(x, PositionGround);
     }
 
-    public override string DialogMessage => "SKKOOOOTCH";
+    public override string DialogMessage => "О нет, скотч!";
 }

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace CatSWayHome.Models;
 
@@ -48,4 +49,6 @@ public class Cat
     
     public float WidthTexture { get; set; }
     public float HeightTexture { get; set; }
+    public HashSet<string> TriggeredDialogTypes { get; set; } = new();
+    public bool JustGotHit { get; set; }
 }

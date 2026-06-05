@@ -12,5 +12,5 @@ public class Fish: BaseEntity
         WorldPosition = new Vector2(x, PositionGround);
     }
 
-    public override string DialogMessage => "FISSSSH";
+    public override string DialogMessage => "Ммм, вкусняшка!";
 }

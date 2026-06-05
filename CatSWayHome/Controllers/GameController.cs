@@ -46,16 +46,19 @@ public class GameController
         _cat.IsJump = false;
         _cat.VelocityY = 0;
         _cat.IsKnockback = false;
+        _cat.JustGotHit = false;
         _gameModel.StartMenuButton.IsFirstClick = true;
         _gameModel.StartMenuButton.Text = "НАЧАТЬ ЗАНОВО";
+        _cat.TriggeredDialogTypes.Clear();
         foreach (var e in _gameModel.Entities)
         {
-            e.HasTriggeredDialog = false;
             if (e is Dog dog)
             {
-                dog.DogWorldX = 4500;
-                dog.IsChasing = false;
-                dog.WorldPosition = new Vector2(dog.DogWorldX, dog.PositionGround);
+                dog.IsRunning = false;
+                dog.JustBarked = false;
+                dog.HasRun = false;
+                dog.WorldPosition = new Vector2(dog.SpawnX, dog.PositionGround);
+                dog.RunWorldPosX = dog.SpawnX;
             }
         }
         _gameModel.State = GameState.Paused;

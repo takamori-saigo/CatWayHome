@@ -29,6 +29,7 @@ public class DrawCat: IDrawElement
     private SoundEffect _walkCatSound;
     private SoundEffectInstance _walkCatSoundInstance;
     private SoundEffect _jumpCatSound;
+    private SoundEffect _shhhSound;
     
     public DrawCat(Cat cat, SpriteBatch spriteBatch, ContentManager contentManager)
     {
@@ -56,6 +57,7 @@ public class DrawCat: IDrawElement
         _walkCatSoundInstance = _walkCatSound.CreateInstance();
         _walkCatSoundInstance.IsLooped = true;
         _jumpCatSound = _contentManager.Load<SoundEffect>("Cat/jumping_cat_sound");
+        _shhhSound = _contentManager.Load<SoundEffect>("Cat/Shhh");
         LoadAnimations();
     }
     
@@ -68,9 +70,6 @@ public class DrawCat: IDrawElement
         else
             DrawCurrentAnimationCat(_calmCatAnimation);
 
-        if (_cat.ShowDialog)
-            DrawDialogWindow();
-        
         if ((_cat.IsMoving && !_cat.IsJump && !_cat.CatWasMoving) || (_cat.CatWasJumping && _cat.IsMoving && !_cat.IsJump))
             _walkCatSoundInstance.Play();                 
         else if ((!_cat.IsMoving || _cat.IsJump) && _cat.CatWasMoving)                                                                                                                                                                                                                 
@@ -78,6 +77,12 @@ public class DrawCat: IDrawElement
             
         if (_cat.IsJump && !_cat.CatWasJumping)
             _jumpCatSound.Play();
+
+        if (_cat.JustGotHit)
+        {
+            _shhhSound.Play();
+            _cat.JustGotHit = false;
+        }
     }
     
     private void DrawCurrentAnimationCat(Animation animation)
@@ -93,11 +98,19 @@ public class DrawCat: IDrawElement
             _cat.WidthTexture = sourceRectangle.Width;
         }
             
+        /*
         DebugClassHitbox.DrawHitBox(new Vector2(currentPosition.X+35, currentPosition.Y), _spriteBatch, (int)_cat.WidthTexture-75, (int)_cat.HeightTexture);
+        */
 
         _spriteBatch.Draw(animation._texture,currentPosition, sourceRectangle, Color.White, 
             0f, Vector2.Zero, 1f, _cat.IsGoingBack ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         animation.Update();
+    }
+
+    public void DrawDialog()
+    {
+        if (_cat.ShowDialog)
+            DrawDialogWindow();
     }
 
     private void DrawDialogWindow()
@@ -105,7 +118,7 @@ public class DrawCat: IDrawElement
         var scaleWindow = 0.20f;
         var text = _cat.DialogText.Substring(0, _cat.DialogCharIndex);
         var position = new Vector2(_cat.InitialPosition.X + _cat.WidthTexture + (_cat.IsGoingBack ? - _cat.WidthTexture - 230 : -30), _cat.InitialPosition.Y - 95 + _cat.DeltaY);
-        _spriteBatch.Draw(_dialogWindow, position, null, Color.White, 
+        _spriteBatch.Draw(_dialogWindow, position, null, Color.White * 0.85f, 
             0f, Vector2.Zero, scaleWindow, _cat.IsGoingBack ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         
         var windowWidth = _dialogWindow.Width * scaleWindow;

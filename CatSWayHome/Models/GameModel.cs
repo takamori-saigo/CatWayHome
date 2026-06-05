@@ -17,7 +17,7 @@ public class GameModel
     
     public GameModel()
     {
-        State = GameState.Playing;
+        State = GameState.Paused;
         InitializeEntities();
     }
 
@@ -34,19 +34,21 @@ public class GameModel
         Entities = new List<BaseEntity>();
         InitializeStaticEntities();
     }
-
+    
     private void InitializeStaticEntities()
     {
         var positionsRubish = new[] { 3000}; 
         var positionsCucumbers = new[] { 4200, 9200};
-        var positionsBenches = new[] { 5100 };
+        var positionsBenches = new[] { 5130 };
         var positionsOfCondei = new[] { 1850, 9000 };
-        var positionsOfFishes = new[] { 3700, 4800, 6000 };
+        var positionsOfFishes = new[] { 3700, 4800, 6400, 7400, 11200 };
         var positionsOfLuk = new[] { 2000, 6850 };
-        var positionsSkotch = new[] { 5600 };
-        var positionsDog = new[] { 5600,  18500};
-        var triggerDog = 300;
-        var positionExitDoor = 11500;
+        var positionsSkotch = new[] { 5600, 8000 };
+        var positionsDog = new[] { 4700, 11900};
+        var triggerDog = 1000f;
+        var positionExitDoor = 11900;
+        var positionOfCar = 10000;
+        var positionOfBarrel = 6720;
         Entities.AddRange(positionsRubish.Select(x => new Rubbish(x)));
         Entities.AddRange(positionsCucumbers.Select(x => new Cucumber(x)));
         Entities.AddRange(positionsBenches.Select(x => new Bench(x)));
@@ -54,19 +56,9 @@ public class GameModel
         Entities.AddRange(positionsOfFishes.Select(x => new Fish(x)));
         Entities.AddRange(positionsOfLuk.Select(x => new Luk(x)));
         Entities.AddRange(positionsSkotch.Select(x => new Skotch(x)));
-        Entities.Add(new Car(10000));
+        Entities.Add(new Car(positionOfCar));
         Entities.AddRange(positionsDog.Select(x => new Dog(x, triggerDog)));
-        Entities.Add(new Barrel(6720));
+        Entities.Add(new Barrel(positionOfBarrel));
         Entities.Add(new ExitDoor(positionExitDoor));
-    }
-    
-    private void InitializeCoins()
-    {
-        /*var positions = new Vector2[4] { new Vector2(50, 70), new Vector2(50, 140), new Vector2(50, 200), new Vector2(50, 300) };
-        coins = new Coin[positions.Length];
-        for (int i = 0; i < positions.Length; i++)
-        {
-            coins[i] = new Coin(positions[i], false);
-        }*/
     }
 }

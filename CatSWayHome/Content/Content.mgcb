@@ -3,7 +3,7 @@
 
 /outputDir:bin/$(Platform)
 /intermediateDir:obj/$(Platform)
-/platform:DesktopGL
+/platform:Windows
 /config:
 /profile:Reach
 /compress:False
@@ -13,7 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../luk.png
+#begin ../../../../CAAAT/CityNoise.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../../../../CAAAT/CityNoise.wav;background/CityNoise.wav
+
+#begin ../../../../CAAAT/luk.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +29,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../../../../luk.png;Entities/luk.png
+/build:../../../../CAAAT/luk.png;Entities/luk.png
 
 #begin background/background_street.png
 /importer:TextureImporter
@@ -91,6 +97,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:background/street.jpg
+
+#begin background/Win.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:background/Win.wav
 
 #begin background/WonBackground.jpg
 /importer:TextureImporter
@@ -205,6 +217,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Cat/jumping_cat.png
+
+#begin Cat/Shhh.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Cat/Shhh.mp3
+
+#begin Entities/bark.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Entities/bark.wav
 
 #begin Entities/Bench.png
 /importer:TextureImporter
